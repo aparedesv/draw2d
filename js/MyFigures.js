@@ -1,29 +1,21 @@
 
 var MySquare = draw2d.shape.basic.Rectangle.extend({
 
-    init : function(attr, setter, getter)
+    /**
+     * sense el init funciona igual???
+     * suposo que a mida que anem requerint funcionalitats caldrà...
+     */
+    /* init : function(attr, setter, getter)
     {
         this._super($.extend({radius:0},attr), setter, getter); 
-    },
+    }, */
 
-    /**
-     * @method
-     * Change the corner radius if the user clicks on the element. 
-     * quite simple....
-     *
-     *      // Alternatively you can register an event with:
-     *      //
-     *      figure.on("dblclick", function(emitter, event){
-     *          alert("user dbl click on the figure");
-     *      });
-     *
-     */
-
-    // We don't need this at this moment
-    // onDoubleClick: function()
-    // {
-    // 	this.setRadius( this.getRadius()===5?20:5);
-    // }
+    onDoubleClick: function()
+    {
+    	this.label = new draw2d.shape.basic.Label({text:"label", color:"#0d0d0d", fontColor:"#0d0d0d"});
+        this.add(this.label, new draw2d.layout.locator.CenterLocator(this));
+        this.label.installEditor(new draw2d.ui.LabelInplaceEditor());
+    }
 
 });
 
