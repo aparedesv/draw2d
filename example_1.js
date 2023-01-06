@@ -18,8 +18,8 @@ document.addEventListener("DOMContentLoaded",function () {
             stroke: 0,
         });
         
-        figSquare.createPort("output", locator);
-        figSquare.createPort("input", locator);
+        figSquare.createPort("output", outputLocator);
+        figSquare.createPort("input", inputLocator);
 
         canvas.add(figSquare, 10, 10);
     });
@@ -35,8 +35,8 @@ document.addEventListener("DOMContentLoaded",function () {
             stroke: 0,
         });
 
-        figCircle.createPort("output", locator);
-        figCircle.createPort("input", locator);
+        figCircle.createPort("output", outputLocator);
+        figCircle.createPort("input", inputLocator);
 
         canvas.add(figCircle, 50, 50);
     });
