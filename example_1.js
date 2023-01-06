@@ -1,3 +1,12 @@
+/**
+ * Creates ports to connect figures
+ * 
+ * @param {object} fig The figure to apply Port
+ */
+function figCreatePort(fig) {    
+    fig.createPort("output", outputLocator);
+    fig.createPort("input", inputLocator);
+}
 
 document.addEventListener("DOMContentLoaded",function () {
     
@@ -17,6 +26,8 @@ document.addEventListener("DOMContentLoaded",function () {
             bgColor: square.style.backgroundColor,
             stroke: 0,
         });
+
+        figCreatePort(figSquare);
         canvas.add(figSquare, 10, 10);
     });
 
@@ -28,6 +39,8 @@ document.addEventListener("DOMContentLoaded",function () {
             bgColor: circle.style.backgroundColor,
             stroke: 0,
         });
+        
+        figCreatePort(figCircle);
         canvas.add(figCircle, 50, 50);
     });
 
