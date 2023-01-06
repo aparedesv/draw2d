@@ -1,3 +1,12 @@
+/**
+ * Creates ports to connect figures
+ * 
+ * @param {object} fig The figure to apply Port
+ */
+function figCreatePort(fig) {    
+    fig.createPort("output", outputLocator);
+    fig.createPort("input", inputLocator);
+}
 
 document.addEventListener("DOMContentLoaded",function () {
     
@@ -17,14 +26,10 @@ document.addEventListener("DOMContentLoaded",function () {
             bgColor: square.style.backgroundColor,
             stroke: 0,
         });
-        
-        figSquare.createPort("output", outputLocator);
-        figSquare.createPort("input", inputLocator);
 
+        figCreatePort(figSquare);
         canvas.add(figSquare, 10, 10);
     });
-
-    // var start = new draw2d.shape.node.Hub();
 
     let circle = document.getElementById('circle');
     circle.addEventListener('click', (emmiter, event) => {        
@@ -34,10 +39,8 @@ document.addEventListener("DOMContentLoaded",function () {
             bgColor: circle.style.backgroundColor,
             stroke: 0,
         });
-
-        figCircle.createPort("output", outputLocator);
-        figCircle.createPort("input", inputLocator);
-
+        
+        figCreatePort(figCircle);
         canvas.add(figCircle, 50, 50);
     });
 
