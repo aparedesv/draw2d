@@ -17,8 +17,14 @@ document.addEventListener("DOMContentLoaded",function () {
             bgColor: square.style.backgroundColor,
             stroke: 0,
         });
+        
+        figSquare.createPort("output", locator);
+        figSquare.createPort("input", locator);
+
         canvas.add(figSquare, 10, 10);
     });
+
+    // var start = new draw2d.shape.node.Hub();
 
     let circle = document.getElementById('circle');
     circle.addEventListener('click', (emmiter, event) => {        
@@ -28,6 +34,10 @@ document.addEventListener("DOMContentLoaded",function () {
             bgColor: circle.style.backgroundColor,
             stroke: 0,
         });
+
+        figCircle.createPort("output", locator);
+        figCircle.createPort("input", locator);
+
         canvas.add(figCircle, 50, 50);
     });
 

@@ -35,3 +35,5 @@ var MyCircle = draw2d.shape.basic.Circle.extend({
     },    
 
 });
+
+var locator = new draw2d.layout.locator.RightLocator(figSquare);
