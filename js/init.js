@@ -19,6 +19,14 @@ function addElementToAside (element) {
     elAside.appendChild(element);
 }
 
+function download(content, fileName, contentType) {
+    var a = document.createElement("a");
+    var file = new Blob([content], {type: contentType});
+    a.href = URL.createObjectURL(file);
+    a.download = fileName;
+    a.click();
+}
+
 document.addEventListener("DOMContentLoaded",function () {
 
     let square = document.createElement("div");
@@ -45,5 +53,17 @@ document.addEventListener("DOMContentLoaded",function () {
         backgroundColor: "aqua",
     });
     addElementToAside(circle);
+    
+    let save = document.createElement("button");
+    save.id = "save";
+    save.innerHTML = "SAVE";
+    addElementToAside(save);
+    
+    let load = document.createElement("button");
+    load.id = "load";
+    load.innerHTML = "LOAD";
+    addElementToAside(load);
+
+
 
 });
