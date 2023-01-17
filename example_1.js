@@ -55,10 +55,8 @@ document.addEventListener("DOMContentLoaded",function () {
             // insert the json string into a DIV for preview or post
             // it via ajax to the server....
             // $("#json").text(jsonTxt);
-            console.log(jsonTxt);
-
+            // console.log(jsonTxt);
             download(jsonTxt, 'jsonTxt.json', 'text/plain');
-
         });
     });
     
@@ -239,6 +237,18 @@ document.addEventListener("DOMContentLoaded",function () {
     });
 
     
-    
+    var writer = new draw2d.io.json.Writer();
+    writer.marshal(canvas, function(json){
+        // convert the json object into string representation
+        var jsonTxt = JSON.stringify(json,null,2);
+
+        // insert the json string into a DIV for preview or post
+        // it via ajax to the server....
+        $("#json").text(jsonTxt);
+    });
+
+    save.addEventListener('click', (emmiter, event) => {        
+        console.log('hola');
+    });
 
 });

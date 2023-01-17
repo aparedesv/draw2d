@@ -64,6 +64,4 @@ document.addEventListener("DOMContentLoaded",function () {
     load.innerHTML = "LOAD";
     addElementToAside(load);
 
-
-
 });
