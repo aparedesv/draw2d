@@ -65,3 +65,20 @@ document.addEventListener("DOMContentLoaded",function () {
     addElementToAside(load);
 
 });
+
+const modal = document.getElementById("myModal");
+const span = document.getElementById("close");
+const fileList = document.getElementById("file-list");
+
+span.onclick = function() {
+  modal.style.display = "none";
+  fileList.innerHTML = "";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+    fileList.innerHTML = "";
+  }
+}

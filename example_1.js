@@ -9,7 +9,7 @@ function figCreatePort(fig) {
 }
 
 /**
- * Gets JSON files from server
+ * Gets JSON files list from server
  */
 function getFiles() {
   fetch('/php/scan_draws.php')
@@ -17,21 +17,27 @@ function getFiles() {
     .then(data => {
       // Mostrar arxius en una llista
       console.log(data);
+      showFiles(data);
     })
     .catch(error => console.error('Error:', error));
 }
 
 /**
- * Mostrar llista d'arxius a carregar
+ * Shows file list to choose
  * 
  * @param {object} files 
  */
 function showFiles(files) {
+  // const modal = document.getElementById("myModal");
+  modal.style.display = "block";
   const fileList = document.getElementById("file-list");
   for (let file of files) {
-    const listItem = document.createElement("li");
-    listItem.textContent = file;
-    fileList.appendChild(listItem);
+    if (file != '.' && file != '..') {      
+      const listItem = document.createElement("li");
+      listItem.classList.add("file-path");
+      listItem.textContent = file;
+      fileList.appendChild(listItem);
+    }
   }
 }
 
@@ -90,6 +96,12 @@ document.addEventListener("DOMContentLoaded",function () {
     let load = document.getElementById('load');
     load.addEventListener('click', (emmiter, event) => {
         getFiles();
+        document.querySelectorAll('.file-path').forEach(item => {
+          item.addEventListener('click', (emmiter, event) => {
+            console.log('emmiter');
+          })
+        })
+
         /*
         let jsonDocument = [
           {
@@ -274,10 +286,6 @@ document.addEventListener("DOMContentLoaded",function () {
         // insert the json string into a DIV for preview or post
         // it via ajax to the server....
         $("#json").text(jsonTxt);
-    });
-
-    save.addEventListener('click', (emmiter, event) => {        
-        console.log('hola');
     });
 
 });
