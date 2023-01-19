@@ -9,20 +9,6 @@ function figCreatePort(fig) {
 }
 
 /**
- * Gets JSON files list from server
- */
-function getFiles() {
-  fetch('/php/scan_draws.php')
-    .then(response => response.json())
-    .then(data => {
-      // Mostrar arxius en una llista
-      console.log(data);
-      showFiles(data);
-    })
-    .catch(error => console.error('Error:', error));
-}
-
-/**
  * Shows file list to choose
  * 
  * @param {object} files 
@@ -84,208 +70,38 @@ document.addEventListener("DOMContentLoaded",function () {
         writer.marshal(canvas, function(json){
             // convert the json object into string representation
             var jsonTxt = JSON.stringify(json,null,2);
+            window.localStorage.setItem('draw_saved', jsonTxt);
 
             // insert the json string into a DIV for preview or post
             // it via ajax to the server....
             // $("#json").text(jsonTxt);
             // console.log(jsonTxt);
-            download(jsonTxt, 'jsonTxt.json', 'text/plain');
+            // download(jsonTxt, 'jsonTxt.json', 'text/plain');
         });
     });
     
     let load = document.getElementById('load');
     load.addEventListener('click', (emmiter, event) => {
-        getFiles();
-        document.querySelectorAll('.file-path').forEach(item => {
-          item.addEventListener('click', (emmiter, event) => {
-            console.log('emmiter');
-          })
-        })
-
-        /*
-        let jsonDocument = [
-          {
-            "type": "draw2d.shape.basic.Rectangle",
-            "id": "dbbf8c3e-00db-e240-6bd6-1ac12e05286c",
-            "x": 233,
-            "y": 111,
-            "width": 75,
-            "height": 75,
-            "alpha": 1,
-            "selectable": true,
-            "draggable": true,
-            "angle": 0,
-            "userData": {},
-            "cssClass": "draw2d_shape_basic_Rectangle",
-            "ports": [
-              {
-                "type": "draw2d.InputPort",
-                "id": "8c7d4c03-fde0-4e23-96e2-7d60fb6a468b",
-                "width": 10,
-                "height": 10,
-                "alpha": 1,
-                "selectable": false,
-                "draggable": true,
-                "angle": 0,
-                "userData": {},
-                "cssClass": "draw2d_InputPort",
-                "bgColor": "rgba(79,104,112,1)",
-                "color": "rgba(27,27,27,1)",
-                "stroke": 1,
-                "dasharray": null,
-                "maxFanOut": 9007199254740991,
-                "name": "input0",
-                "semanticGroup": "global",
-                "port": "draw2d.InputPort",
-                "locator": "draw2d.layout.locator.LeftLocator",
-                "locatorAttr": {}
-              },
-              {
-                "type": "draw2d.OutputPort",
-                "id": "c52838af-9f51-5cd8-6431-95d7edd79e76",
-                "width": 10,
-                "height": 10,
-                "alpha": 1,
-                "selectable": false,
-                "draggable": true,
-                "angle": 0,
-                "userData": {},
-                "cssClass": "draw2d_OutputPort",
-                "bgColor": "rgba(79,104,112,1)",
-                "color": "rgba(27,27,27,1)",
-                "stroke": 1,
-                "dasharray": null,
-                "maxFanOut": 9007199254740991,
-                "name": "output0",
-                "semanticGroup": "global",
-                "port": "draw2d.OutputPort",
-                "locator": "draw2d.layout.locator.RightLocator",
-                "locatorAttr": {}
-              }
-            ],
-            "bgColor": "rgba(255,105,180,1)",
-            "color": "rgba(27,27,27,1)",
-            "stroke": 0,
-            "radius": 0,
-            "dasharray": null
-          },
-          {
-            "type": "draw2d.shape.basic.Circle",
-            "id": "86c43030-3466-253a-9150-df64e6646460",
-            "x": 600,
-            "y": 548,
-            "width": 75,
-            "height": 75,
-            "alpha": 1,
-            "selectable": true,
-            "draggable": true,
-            "angle": 0,
-            "userData": {},
-            "cssClass": "draw2d_shape_basic_Circle",
-            "ports": [
-              {
-                "type": "draw2d.InputPort",
-                "id": "8dd5aee2-4ac8-b629-7cdd-e08900d1b903",
-                "width": 10,
-                "height": 10,
-                "alpha": 1,
-                "selectable": false,
-                "draggable": true,
-                "angle": 0,
-                "userData": {},
-                "cssClass": "draw2d_InputPort",
-                "bgColor": "rgba(79,104,112,1)",
-                "color": "rgba(27,27,27,1)",
-                "stroke": 1,
-                "dasharray": null,
-                "maxFanOut": 9007199254740991,
-                "name": "input0",
-                "semanticGroup": "global",
-                "port": "draw2d.InputPort",
-                "locator": "draw2d.layout.locator.LeftLocator",
-                "locatorAttr": {}
-              },
-              {
-                "type": "draw2d.OutputPort",
-                "id": "d9dadfdd-fcab-ec8c-ef26-2c14a4d7de56",
-                "width": 10,
-                "height": 10,
-                "alpha": 1,
-                "selectable": false,
-                "draggable": true,
-                "angle": 0,
-                "userData": {},
-                "cssClass": "draw2d_OutputPort",
-                "bgColor": "rgba(79,104,112,1)",
-                "color": "rgba(27,27,27,1)",
-                "stroke": 1,
-                "dasharray": null,
-                "maxFanOut": 9007199254740991,
-                "name": "output0",
-                "semanticGroup": "global",
-                "port": "draw2d.OutputPort",
-                "locator": "draw2d.layout.locator.RightLocator",
-                "locatorAttr": {}
-              }
-            ],
-            "bgColor": "rgba(0,255,255,1)",
-            "color": "rgba(27,27,27,1)",
-            "stroke": 0,
-            "dasharray": null
-          },
-          {
-            "type": "draw2d.Connection",
-            "id": "1b7e2f86-de64-4a23-9d81-ff6660ac59b5",
-            "alpha": 1,
-            "selectable": true,
-            "draggable": true,
-            "angle": 0,
-            "userData": {},
-            "cssClass": "draw2d_Connection",
-            "stroke": 2,
-            "color": "rgba(18,156,228,1)",
-            "outlineStroke": 0,
-            "outlineColor": "rgba(0,0,0,0)",
-            "policy": "draw2d.policy.line.LineSelectionFeedbackPolicy",
-            "vertex": [
-              {
-                "x": 308,
-                "y": 148.5
-              },
-              {
-                "x": 600,
-                "y": 585.5
-              }
-            ],
-            "router": "draw2d.layout.connection.DirectRouter",
-            "radius": 3,
-            "source": {
-              "node": "dbbf8c3e-00db-e240-6bd6-1ac12e05286c",
-              "port": "output0"
-            },
-            "target": {
-              "node": "86c43030-3466-253a-9150-df64e6646460",
-              "port": "input0"
-            }
-          }
-        ];
-        */
+        // getFiles();
         
+        let jsonDraw = window.localStorage.getItem('draw_saved');
+
         // unmarshal the JSON document into the canvas
         // (load)
-        // let reader = new draw2d.io.json.Reader();
-        // reader.unmarshal(canvas, jsonDocument);
+        canvas.clear();
+        let reader = new draw2d.io.json.Reader();
+        reader.unmarshal(canvas, jsonDraw);
     });
 
     
-    var writer = new draw2d.io.json.Writer();
-    writer.marshal(canvas, function(json){
-        // convert the json object into string representation
-        var jsonTxt = JSON.stringify(json,null,2);
+    // var writer = new draw2d.io.json.Writer();
+    // writer.marshal(canvas, function(json){
+    //     // convert the json object into string representation
+    //     var jsonTxt = JSON.stringify(json,null,2);
 
-        // insert the json string into a DIV for preview or post
-        // it via ajax to the server....
-        $("#json").text(jsonTxt);
-    });
+    //     // insert the json string into a DIV for preview or post
+    //     // it via ajax to the server....
+    //     $("#json").text(jsonTxt);
+    // });
 
 });
