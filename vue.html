@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  </head>
+  <body>
+    
+    <div id="app">
+
+      <button @click="omplirAside()">crear aside</button>
+
+      <div id="wrapper">
+        <aside>
+          <button-counter/>
+        </aside>
+        <main id="workspace"></main>
+      </div>      
+
+    </div>
+
+    <script>
+
+      var button = Vue.component('button-counter', {
+        data: function () {
+          return {
+            count: 0
+          }
+        },
+        template: '<button v-on:click="count++">Me ha pulsado {{ count }} veces.</button>'
+      })
+
+      var app = new Vue({
+        el: '#app',
+        components: {
+          button: button
+        },
+        data: {
+          message: 'Hello Vue!'
+        },
+        methods: {
+          omplirAside() {
+            
+            addElementToAside(square);
+
+          },
+          addElementToAside(element) {
+            let elAside = document.getElementsByTagName('aside')[0];
+            elAside.appendChild(element);
+          }
+        }
+      })
+
+    </script>
+
+  </body>
+</html>
