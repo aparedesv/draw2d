@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ca">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="#">
+    <title>JS Flow Moundata/Sherpa</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://freegroup.github.io/draw2d/jquery.js"></script>
+    <script src="https://freegroup.github.io/draw2d/jquery-ui.js"></script>
+    <script src="https://freegroup.github.io/draw2d/draw2d.js"></script>
+    <script src="js/MyFigures.js"></script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="app">
+            <aside>
+                <square-figure @click="createSquare()"></square-figure>
+                <circle-figure></circle-figure>
+
+                <button id="save">SAVE</button>
+                <button id="load">LOAD</button>
+                <button id="clear">CLEAR</button>
+            </aside>
+            <main id="workspace">
+                <canvas-content></canvas-content>
+            </main>
+        </div>
+    </div>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span id="close">&times;</span>
+            <ul id="file-list"></ul>
+        </div>
+    </div>
+    <!-- <script src="js/init.js"></script> -->
+    <!-- <script src="example_1.js"></script> -->
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+        var square = Vue.component('square-figure', {            
+            template: '<div id="square" style="width: 75px; height: 75px; background-color: hotpink;"></div>'
+        });
+        var circle = Vue.component('circle-figure', {
+            template: '<div id="circle" style="width: 75px; height: 75px; border-radius: 50%; background-color: aqua;"></div>'
+        });
+        var canvas = Vue.component('canvas-content', {
+            template: '<div id="my-figures" onselectstart="javascript:/*IE8 hack*/return false" style="width: 3000px; height: 3000px; cursor: default;"></div>'
+        });
+        var app = new Vue({
+            el: '#app',
+            methods: {
+                createCanvas() {
+                    let canvas = new draw2d.Canvas("my-figures");
+                },
+                figCreatePort(fig) {
+                    fig.createPort("output", outputLocator);
+                    fig.createPort("input", inputLocator);
+                },
+                createSquare() {
+                    console.log('createSquare');
+                    let square = document.getElementById('square');
+                    let figCircle = new MyCircle({
+                        width: circle.style.width,
+                        height: circle.style.height,
+                        bgColor: circle.style.backgroundColor,
+                        stroke: 0,
+                    });
+
+                    this.figCreatePort(figCircle);
+                    canvas.add(figCircle, 50, 50);
+                },
+                clearCanvas() {
+                    canvas.clear();
+                }
+            },
+            mounted() {
+                this.createCanvas();
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,21 +1,18 @@
 
 var MySquare = draw2d.shape.basic.Rectangle.extend({
 
-    onContextMenu: function(x, y)
-    {
-
+    onContextMenu: function(x, y) {
         var shape = this.shape[0];
         $(shape).attr('id', this.getId());
         var id = "#" + $(shape).attr('id');
         $.contextMenu({
             selector: id,
             autoHide: true,
-            events: 
-                {
-                    hide: function () {
-                        $.contextMenu('destroy');
-                    }
-                },
+            events: {
+                hide: function () {
+                    $.contextMenu('destroy');
+                }
+            },
             callback: $.proxy(function (key, options) {
                 if (key == "delete") {
                     //  without undo/redo support
@@ -30,18 +27,16 @@ var MySquare = draw2d.shape.basic.Rectangle.extend({
             }, this),
             x: x,
             y: y,
-            items:
-                {
-                    "#ff0000": { name: "Vermell" }, // callback: function () { return true; } },
-                    "#00ff00": { name: "Verd" },
-                    "#0000ff": { name: "Blau" },
-                    "delete": { name: "Eliminar" }
-                }
+            items: {
+                "#ff0000": { name: "Vermell" }, // callback: function () { return true; } },
+                "#00ff00": { name: "Verd" },
+                "#0000ff": { name: "Blau" },
+                "delete": { name: "Eliminar" }
+            }
         });
     },
 
-    onDoubleClick: function()
-    {
+    onDoubleClick: function() {
     	this.label = new draw2d.shape.basic.Label({text:"etiqueta", color:"#0d0d0d", fontColor:"#0d0d0d"});
         this.add(this.label, new draw2d.layout.locator.CenterLocator(this));
         this.label.installEditor(new draw2d.ui.LabelInplaceEditor());
@@ -51,8 +46,7 @@ var MySquare = draw2d.shape.basic.Rectangle.extend({
 
 var MyCircle = draw2d.shape.basic.Circle.extend({
 
-    init : function(attr, setter, getter)
-    {
+    init: function(attr, setter, getter) {
         this._super($.extend(attr), setter, getter); 
     },    
 
