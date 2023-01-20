@@ -18,8 +18,7 @@
     <div id="wrapper">
         <div id="app">
             <aside>
-                <my-component></my-component>
-                <!-- <square-figure></square-figure> -->
+                <square-figure></square-figure>
                 <circle-figure></circle-figure>
 
                 <button id="save">SAVE</button>
@@ -46,27 +45,29 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script>
         
-        var squareFigure = Vue.component('my-component', {
+        var squareFigure = Vue.component('square-figure', {
             template: '<div @click="createSquare" id="square" style="width: 75px; height: 75px; background-color: hotpink;"></div>',
             // template: '<button @click="myMethod">Click me</button>',
+            data: {
+                width: '75px',
+                height: '75px',
+                backgroundColor: 'hotpink'
+            },
             methods: {
                 figCreatePort(fig) {
                     fig.createPort("output", outputLocator);
                     fig.createPort("input", inputLocator);
                 },
                 createSquare() {
-                    let square = document.getElementById('square');
                     let figSquare = new MySquare({
-                        width: square.style.width,
-                        height: square.style.height,
-                        bgColor: square.style.backgroundColor,
+                        width: this.width,
+                        height: this.height,
+                        bgColor: this.backgroundColor,
                         stroke: 0,
                     });
 
                     this.figCreatePort(figSquare);
-                    // canvas.add(figCircle, 50, 50);
                     app.addFigure(figSquare);
-                    app.hola();
                 }
             }
         })
