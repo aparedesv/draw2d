@@ -18,7 +18,8 @@
     <div id="wrapper">
         <div id="app">
             <aside>
-                <square-figure @click="createSquare()"></square-figure>
+                <my-component></my-component>
+                <!-- <square-figure></square-figure> -->
                 <circle-figure></circle-figure>
 
                 <button id="save">SAVE</button>
@@ -44,9 +45,36 @@
     <!-- development version, includes helpful console warnings -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script>
-        var square = Vue.component('square-figure', {            
+        
+        var squareFigure = Vue.component('my-component', {
+            template: '<div @click="createSquare" id="square" style="width: 75px; height: 75px; background-color: hotpink;"></div>',
+            // template: '<button @click="myMethod">Click me</button>',
+            methods: {
+                figCreatePort(fig) {
+                    fig.createPort("output", outputLocator);
+                    fig.createPort("input", inputLocator);
+                },
+                createSquare() {
+                    let square = document.getElementById('square');
+                    let figSquare = new MySquare({
+                        width: square.style.width,
+                        height: square.style.height,
+                        bgColor: square.style.backgroundColor,
+                        stroke: 0,
+                    });
+
+                    this.figCreatePort(figSquare);
+                    // canvas.add(figCircle, 50, 50);
+                    app.addFigure(figSquare);
+                    app.hola();
+                }
+            }
+        })
+
+        /* var squareFigure = Vue.component({            
             template: '<div id="square" style="width: 75px; height: 75px; background-color: hotpink;"></div>'
-        });
+        }); */
+
         var circle = Vue.component('circle-figure', {
             template: '<div id="circle" style="width: 75px; height: 75px; border-radius: 50%; background-color: aqua;"></div>'
         });
@@ -55,15 +83,28 @@
         });
         var app = new Vue({
             el: '#app',
+            data: {
+                canvas: null
+            },
+            components: {
+                squareFigure
+            },
             methods: {
+                addFigure(figure) {
+                    this.canvas.add(figure, 50, 50);
+                },
+                hola() {
+                    console.log('hola');
+                },
                 createCanvas() {
                     let canvas = new draw2d.Canvas("my-figures");
+                    this.canvas = canvas;
                 },
                 figCreatePort(fig) {
                     fig.createPort("output", outputLocator);
                     fig.createPort("input", inputLocator);
                 },
-                createSquare() {
+                /* createSquare() {
                     console.log('createSquare');
                     let square = document.getElementById('square');
                     let figCircle = new MyCircle({
@@ -75,7 +116,7 @@
 
                     this.figCreatePort(figCircle);
                     canvas.add(figCircle, 50, 50);
-                },
+                }, */
                 clearCanvas() {
                     canvas.clear();
                 }
