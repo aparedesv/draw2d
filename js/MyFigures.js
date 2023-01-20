@@ -1,5 +1,5 @@
 
-var MySquare = draw2d.shape.basic.Rectangle.extend({
+const MySquare = draw2d.shape.basic.Rectangle.extend({
 
     onContextMenu: function(x, y) {
         var shape = this.shape[0];
