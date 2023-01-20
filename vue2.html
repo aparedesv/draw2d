@@ -20,8 +20,8 @@
             <square-figure></square-figure>
             <circle-figure></circle-figure>
 
-            <button id="save">SAVE</button>
-            <button id="load">LOAD</button>
+            <button id="save" @click="save">SAVE</button>
+            <button id="load" @click="load">LOAD</button>
             <button id="clear" @click="clearCanvas">CLEAR</button>
         </aside>
         <main id="workspace">
@@ -47,7 +47,6 @@
             template: '<div @click="createSquare" style="width: 75px; height: 75px; background-color: hotpink;"></div>',
             // template: '<button @click="myMethod">Click me</button>',
             data() {
-                
                 return {
                     width: '75px',
                     height: '75px',
@@ -114,6 +113,26 @@
                 },
                 clearCanvas() {
                     this.canvas.clear();
+                },
+                save() {
+                    let writer = new draw2d.io.json.Writer();
+                    writer.marshal(this.canvas, function (json) {
+                        // convert the json object into string representation
+                        var jsonTxt = JSON.stringify(json, null, 2);
+                        window.localStorage.setItem('draw_saved', jsonTxt);
+                        // insert the json string into a DIV for preview or post, send via ajax to the server...
+                        // $("#json").text(jsonTxt);
+                        // save to local machine
+                        // download(jsonTxt, 'jsonTxt.json', 'text/plain');
+                    });
+                },
+                load() {
+                    let jsonDraw = window.localStorage.getItem('draw_saved');
+                    // unmarshal the JSON document into the canvas
+                    // (load)
+                    this.canvas.clear();
+                    let reader = new draw2d.io.json.Reader();
+                    reader.unmarshal(this.canvas, jsonDraw);
                 }
             },
             mounted() {
