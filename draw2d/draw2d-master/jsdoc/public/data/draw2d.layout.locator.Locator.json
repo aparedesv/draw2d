@@ -1,0 +1,192 @@
+{
+  "name": "Locator",
+  "namespace": "draw2d.layout.locator",
+  "description": "<p>Controls the location of an IFigure.</p>",
+  "extends": [],
+  "access": "",
+  "virtual": false,
+  "functions": [
+    {
+      "name": "init",
+      "access": "",
+      "virtual": false,
+      "deprecated": "",
+      "description": "<p>Initial Constructor</p>",
+      "parameters": [
+        {
+          "name": "attr",
+          "type": "Object",
+          "description": "<p>additional init attributes</p>",
+          "default": "",
+          "optional": "",
+          "nullable": ""
+        },
+        {
+          "name": "setter",
+          "type": "Object",
+          "description": "<p>key/value map of injected setter-methods</p>",
+          "default": "",
+          "optional": "",
+          "nullable": ""
+        },
+        {
+          "name": "getter",
+          "type": "Object",
+          "description": "<p>key/value map of injected getter-methods</p>",
+          "default": "",
+          "optional": "",
+          "nullable": ""
+        }
+      ],
+      "inherited": false,
+      "since": "",
+      "examples": []
+    },
+    {
+      "name": "attr",
+      "access": "",
+      "virtual": false,
+      "deprecated": "",
+      "description": "<p>Read or set locator attributes.<br>\nWhen no value is given, reads specified attribute from the element.<br>\nWhen value is given, sets the attribute to that value.\nMultiple attributes can be set by passing an object with name-value pairs.</p>\n<p>// multiple attributes:\nlocator.attr({\nx: 30,\ny: 40\n});</p>\n<p>let data = locator.attr()</p>",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String/Object",
+          "description": "",
+          "default": "",
+          "optional": "",
+          "nullable": ""
+        },
+        {
+          "name": "value",
+          "type": "Object",
+          "description": "",
+          "default": "",
+          "optional": true,
+          "nullable": ""
+        }
+      ],
+      "inherited": false,
+      "since": "5.0.1",
+      "examples": [],
+      "returns": {
+        "type": "Object",
+        "description": "<p>either the requested attribute if this method used as getter or <code>this</code> if the method uses as setter</p>"
+      }
+    },
+    {
+      "name": "bind",
+      "access": "",
+      "virtual": false,
+      "deprecated": "",
+      "description": "<p>Callback method if a child is bounded to a parent. This is\nthe perfect moment to prepare the child node with some basic\nbehaviour which are forced by the <code>Locator</code></p>",
+      "parameters": [
+        {
+          "name": "figure",
+          "type": "draw2d.Figure",
+          "description": "",
+          "default": "",
+          "optional": "",
+          "nullable": ""
+        },
+        {
+          "name": "child",
+          "type": "draw2d.Figure",
+          "description": "",
+          "default": "",
+          "optional": "",
+          "nullable": ""
+        }
+      ],
+      "inherited": false,
+      "since": "",
+      "examples": [],
+      "returns": {
+        "type": "this",
+        "description": ""
+      }
+    },
+    {
+      "name": "unbind",
+      "access": "",
+      "virtual": false,
+      "deprecated": "",
+      "description": "<p>Callback method if a child is unbounded to the locator.</p>",
+      "parameters": [
+        {
+          "name": "figure",
+          "type": "draw2d.Figure",
+          "description": "",
+          "default": "",
+          "optional": "",
+          "nullable": ""
+        },
+        {
+          "name": "child",
+          "type": "draw2d.Figure",
+          "description": "",
+          "default": "",
+          "optional": "",
+          "nullable": ""
+        }
+      ],
+      "inherited": false,
+      "since": "",
+      "examples": [],
+      "returns": {
+        "type": "this",
+        "description": ""
+      }
+    },
+    {
+      "name": "relocate",
+      "access": "private",
+      "virtual": false,
+      "deprecated": "",
+      "description": "<p>Controls the location of an I{@link draw2d.Figure}</p>",
+      "parameters": [
+        {
+          "name": "index",
+          "type": "Number",
+          "description": "<p>child index of the figure</p>",
+          "default": "",
+          "optional": "",
+          "nullable": ""
+        },
+        {
+          "name": "figure",
+          "type": "draw2d.Figure",
+          "description": "<p>the figure to control</p>",
+          "default": "",
+          "optional": "",
+          "nullable": ""
+        }
+      ],
+      "inherited": false,
+      "since": "",
+      "examples": []
+    },
+    {
+      "name": "clone",
+      "access": "",
+      "virtual": false,
+      "deprecated": "",
+      "description": "<p>Return a clone of the locator object</p>",
+      "parameters": [],
+      "inherited": false,
+      "since": "",
+      "examples": [],
+      "returns": {
+        "type": "draw2d.layout.locator.Locator",
+        "description": ""
+      }
+    }
+  ],
+  "fires": "",
+  "constructor": {
+    "name": "Locator",
+    "description": "",
+    "parameters": [],
+    "examples": []
+  }
+}

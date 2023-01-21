@@ -1,0 +1,34 @@
+{
+  "name": "UUID",
+  "namespace": "draw2d.util",
+  "description": "<p>Generates a (pseudo) UUID's</p>",
+  "extends": [],
+  "access": "",
+  "virtual": false,
+  "functions": [
+    {
+      "name": "create",
+      "access": "",
+      "virtual": false,
+      "deprecated": "",
+      "description": "<p>Generates a unique id.<br>\nBut just for the correctness: <strong>this is no Global Unique Identifier</strong>, it is just a random generator\nwith the output that looks like a GUID. <br>\nBut may be also useful.</p>",
+      "parameters": [],
+      "inherited": false,
+      "since": "",
+      "examples": [],
+      "returns": {
+        "type": "String",
+        "description": "<p>the  UUID in the format xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx (8-4-4-4-12)</p>"
+      }
+    }
+  ],
+  "fires": "",
+  "constructor": {
+    "name": "UUID",
+    "description": "",
+    "parameters": [],
+    "examples": [
+      "// a UUID in the format\n    // xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx (8-4-4-4-12)\n    var id = draw2d.util.UUID.create();"
+    ]
+  }
+}

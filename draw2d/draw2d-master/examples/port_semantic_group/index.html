@@ -1,0 +1,59 @@
+﻿<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+  <title></title>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+  <link type="text/css" rel="stylesheet" href="./css/example.css"/>
+
+  <script src="./lib/jquery.js"></script>
+  <script src="./lib/jquery-ui.js"></script>
+
+  <script src="../draw2d.js"></script>
+
+
+  <script type="text/javascript">
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+      draw2d.Configuration.factory.createInputPort= function(){
+        let port = new draw2d.InputPort();
+        port.uninstallEditPolicy("draw2d.policy.port.IntrusivePortsFeedbackPolicy")
+        port.installEditPolicy(new draw2d.policy.port.ElasticStrapFeedbackPolicy())
+        return port
+      }
+      draw2d.Configuration.factory.createOutputPort= function(){
+        let port = new draw2d.OutputPort();
+        port.uninstallEditPolicy("draw2d.policy.port.IntrusivePortsFeedbackPolicy")
+        port.installEditPolicy(new draw2d.policy.port.ElasticStrapFeedbackPolicy())
+        return port
+      }
+
+      var canvas = new draw2d.Canvas("gfx_holder");
+
+
+      canvas.add(new draw2d.shape.node.Start(), 100, 100)
+      canvas.add(new draw2d.shape.node.End(), 500, 100)
+
+      canvas.add(new draw2d.shape.node.Start(), 100, 300)
+      canvas.add(new draw2d.shape.node.End(), 500, 300)
+
+
+      // JUST ADD SOME DOCU ELEMENTS ON THE SCREEN
+      var msg = new draw2d.shape.note.PostIt({text:"Only ports in the same 'semanticGroup' can be connected.\nDrag&Drop a 'red' port and try to connect them to a 'green' one.", x:20, y:20});
+      canvas.add(msg);
+
+    });
+  </script>
+
+</head>
+
+<body>
+<div onselectstart="javascript:/*IE8 hack*/return false" id="gfx_holder" style="width:3000px; height:3000px;">
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,59 @@
+{
+  "name": "LabelEditor",
+  "namespace": "draw2d.ui",
+  "description": "<p>Base class for all draw2d.shape.basic.Label editors. The default implementation is to open\na simple javascript prompt dialog.<br>\nUse LabelInplaceEditor or your own implementation if you need more comfort.</p>",
+  "extends": [],
+  "access": "",
+  "virtual": false,
+  "functions": [
+    {
+      "name": "init",
+      "access": "",
+      "virtual": false,
+      "deprecated": "",
+      "description": "",
+      "parameters": [
+        {
+          "name": "attr",
+          "type": "Object",
+          "description": "<p>callback handler and configuration. <strong>{ onCommit:function(){}}, onCancel: function(){}, onStart: function(){}, text:'My Dialog Title' }</strong></p>",
+          "default": "",
+          "optional": "",
+          "nullable": ""
+        }
+      ],
+      "inherited": false,
+      "since": "",
+      "examples": []
+    },
+    {
+      "name": "start",
+      "access": "",
+      "virtual": false,
+      "deprecated": "",
+      "description": "<p>Trigger the edit of the label text.</p>",
+      "parameters": [
+        {
+          "name": "label",
+          "type": "draw2d.shape.basic.Label",
+          "description": "<p>the label to edit</p>",
+          "default": "",
+          "optional": "",
+          "nullable": ""
+        }
+      ],
+      "inherited": false,
+      "since": "",
+      "examples": []
+    }
+  ],
+  "fires": "",
+  "constructor": {
+    "name": "LabelEditor",
+    "description": "",
+    "parameters": [],
+    "examples": [
+      "let label =  new draw2d.shape.basic.Label({text:\"Double Click on me\"});\n\n   label.installEditor(new draw2d.ui.LabelEditor({\n      // called after the value has been set to the LabelFigure\n      onCommit: $.proxy(function(value){\n          alert(\"new value set to:\"+value);\n      },this),\n      // called if the user abort the operation\n      onCancel: function(){\n      }\n   }));\n\n   canvas.add(label,50,10);"
+    ]
+  }
+}

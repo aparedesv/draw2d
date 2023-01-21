@@ -1,0 +1,52 @@
+{
+  "name": "CommandType",
+  "namespace": "draw2d.command",
+  "description": "<p>EditPolicies should determine an Figures editing capabilities.\nIt is possible to implement an Figure such that it handles all editing\nresponsibility.<br>\nHowever, it is much more flexible and object-oriented to use\nEditPolicies. Using policies, you can pick and choose the editing behavior for\nan Figure without being bound to its class hierarchy. Code reuse is increased,\nand code management is easier.</p>",
+  "extends": [],
+  "access": "",
+  "virtual": false,
+  "functions": [
+    {
+      "name": "init",
+      "access": "",
+      "virtual": false,
+      "deprecated": "",
+      "description": "<p>Create a new edit policy object</p>",
+      "parameters": [
+        {
+          "name": "policy",
+          "type": "String",
+          "description": "",
+          "default": "",
+          "optional": "",
+          "nullable": ""
+        }
+      ],
+      "inherited": false,
+      "since": "",
+      "examples": []
+    },
+    {
+      "name": "getPolicy",
+      "access": "",
+      "virtual": false,
+      "deprecated": "",
+      "description": "<p>Return the String representation of the policy</p>",
+      "parameters": [],
+      "inherited": false,
+      "since": "",
+      "examples": [],
+      "returns": {
+        "type": "String",
+        "description": ""
+      }
+    }
+  ],
+  "fires": "",
+  "constructor": {
+    "name": "CommandType",
+    "description": "",
+    "parameters": [],
+    "examples": []
+  }
+}

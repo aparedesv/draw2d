@@ -1,0 +1,28 @@
+{
+  "name": "DraggableLocator",
+  "namespace": "draw2d.layout.locator",
+  "description": "<p>A DraggableLocator is used to place figures relative to the parent top left corner. It is\npossible to move a child node via drag&amp;drop.</p>",
+  "extends": [],
+  "access": "",
+  "virtual": false,
+  "functions": [
+    {
+      "name": "init",
+      "access": "",
+      "virtual": false,
+      "deprecated": "",
+      "description": "<p>Constructs a locator with associated parent.</p>",
+      "parameters": [],
+      "inherited": false,
+      "since": "",
+      "examples": []
+    }
+  ],
+  "fires": "",
+  "constructor": {
+    "name": "DraggableLocator",
+    "description": "",
+    "parameters": [],
+    "examples": []
+  }
+}

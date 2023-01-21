@@ -1,0 +1,75 @@
+﻿<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+<title></title>
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="viewport" content="width=device-width, minimum-scale=1.0" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <link type="text/css" rel="stylesheet" href="./css/example.css" />
+
+    <script src="./lib/jquery.js"></script>
+    <script src="./lib/jquery-ui.js"></script>
+
+
+    <script src="../draw2d.js"></script>
+
+    <script src="CardJailhouse.js"></script>
+    <script src="CollapsibleJailhouse.js"></script>
+
+    <script src="document.js"></script>
+
+<script type="text/javascript">
+
+// just for debugging
+var canvas = null;
+var oval =null;
+var circle =null;
+var rect =null;
+
+// end debug variables
+
+document.addEventListener("DOMContentLoaded",function () {
+
+    // create the canvas for the user interaction
+    //
+    canvas = new draw2d.Canvas("gfx_holder");
+    canvas.installEditPolicy(new draw2d.policy.canvas.FadeoutDecorationPolicy());
+    canvas.installEditPolicy(new draw2d.policy.canvas.ExtendedKeyboardPolicy());
+
+    // install a custom connection create policy
+    //
+    var router = new draw2d.layout.connection.InteractiveManhattanConnectionRouter();
+    canvas.installEditPolicy(  new draw2d.policy.connection.DragConnectionCreatePolicy({
+                createConnection:function(){
+                    return new draw2d.Connection({
+                        radius:3,
+                        stroke:2,
+                        color: "#129CE4",
+                        outlineStroke:1,
+                        outlineColor:"#ffffff",
+                        router: router});
+                }
+            })
+    );
+
+
+    // unmarshal the JSON document into the canvas
+    // (load)
+    var reader = new draw2d.io.json.Reader();
+    reader.unmarshal(canvas, jsonDocument);
+
+    var msg = new draw2d.shape.note.PostIt({text: "Example extension of a Jailhouse group with the feature expand/collapse\nDrag&Drop elements on the blue group, connect them and expand/collapse the group to see the effect"});
+    canvas.add(msg, 20,20);
+
+});
+
+</script>
+
+</head>
+
+<body>
+<div  onselectstart="javascript:/*IE8 hack*/return false" id="gfx_holder" style="width:3000px; height:3000px; ">
+</div>
+
+</body>
+</html>
