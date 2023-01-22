@@ -58,7 +58,7 @@ var MyMailSVG = draw2d.SVGFigure.extend({
 var MyMailImage = draw2d.shape.basic.Image.extend({
     init: function(attr, setter, getter) {
         this._super($.extend(attr), setter, getter);
-        this.path = 'file:///C:/Users/propietari/code/draw2d/js/mail.svg';
+        this.path = '/draw2d/assets/img/mail.svg';
         this.setResizeable(false);
     },
 });
