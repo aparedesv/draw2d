@@ -58,7 +58,7 @@ var MyCircle = draw2d.shape.basic.Circle.extend({
 var MyMailImage = draw2d.shape.basic.Image.extend({
     init: function(attr, setter, getter) {
         this._super($.extend(attr), setter, getter);
-        this.path = '/draw2d/assets/img/mail.svg';
+        this.path = './assets/img/mail.svg';
         this.setResizeable(true);
     },
 });
