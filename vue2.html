@@ -63,6 +63,13 @@
 
                     app.figCreatePort(figSquare);
                     app.canvas.add(figSquare, 50, 50);
+                    var c = new draw2d.Connection({
+                        sourceDecorator: new draw2d.decoration.connection.CircleDecorator(),
+                        targetDecorator: new draw2d.decoration.connection.ArrowDecorator(),
+                        source: figSquare.getOutputPort(0),
+                        target: figSquare.getInputPort(0)
+                    });
+                    app.canvas.add(c);
                 }
             }
         })
@@ -86,7 +93,7 @@
                     });
 
                     app.figCreatePort(figCircle);
-                    app.canvas.add(figCircle, 50, 50);
+                    app.canvas.add(figCircle, 50, 50);                    
                 }
             }
         });
@@ -108,7 +115,7 @@
                     });
 
                     app.figCreatePort(figMail);
-                    app.canvas.add(figMail, 50, 50);
+                    app.canvas.add(figMail, 50, 50);                    
                 }
             }
         });
@@ -126,6 +133,12 @@
                 figCreatePort(fig) {
                     fig.createPort("output", outputLocator);
                     fig.createPort("input", inputLocator);
+                    
+                    // console.log(fig.getOutputPort(0));
+                    // console.log(fig.getInputPort(0));
+                },
+                arrowDecoratorPort(fig) {
+
                 },
                 createCanvas() {
                     let canvas = new draw2d.Canvas("my-figures");
