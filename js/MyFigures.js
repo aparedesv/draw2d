@@ -1,51 +1,63 @@
+function clickRight(x, y, item) {
+    var shape = item.shape[0];
+    $(shape).attr('id', item.getId());
+    var id = "#" + $(shape).attr('id');
+    $.contextMenu({
+        selector: id,
+        autoHide: true,
+        events: {
+            hide: function () {
+                $.contextMenu('destroy');
+            }
+        },
+        callback: $.proxy(function (key, options) {
+            if (key == "delete") {
+                //  without undo/redo support
+                //  item.getCanvas().removeFigure(item);
+
+                //  with undo/redo support
+                var cmd = new draw2d.command.CommandDelete(item);
+                item.getCanvas().getCommandStack().execute(cmd);
+            } else {
+                item.setBackgroundColor(key);
+            }
+        }, item),
+        x: x,
+        y: y,
+        items: {
+            "#ff0000": { name: "Vermell" }, // callback: function () { return true; } },
+            "#00ff00": { name: "Verd" },
+            "#0000ff": { name: "Blau" },
+            "delete": { name: "Eliminar" }
+        }
+    });
+}
+
+function setLabel(item) {
+    item.label = new draw2d.shape.basic.Label({text:"etiqueta", color:"#0d0d0d", fontColor:"#0d0d0d"});
+    item.add(item.label, new draw2d.layout.locator.CenterLocator(item));
+    item.label.installEditor(new draw2d.ui.LabelInplaceEditor());
+} 
 
 const MySquare = draw2d.shape.basic.Rectangle.extend({
     onContextMenu: function(x, y) {
-        var shape = this.shape[0];
-        $(shape).attr('id', this.getId());
-        var id = "#" + $(shape).attr('id');
-        $.contextMenu({
-            selector: id,
-            autoHide: true,
-            events: {
-                hide: function () {
-                    $.contextMenu('destroy');
-                }
-            },
-            callback: $.proxy(function (key, options) {
-                if (key == "delete") {
-                    //  without undo/redo support
-                    //  this.getCanvas().removeFigure(this);
-
-                    //  with undo/redo support
-                    var cmd = new draw2d.command.CommandDelete(this);
-                    this.getCanvas().getCommandStack().execute(cmd);
-                } else {
-                    this.setBackgroundColor(key);
-                }
-            }, this),
-            x: x,
-            y: y,
-            items: {
-                "#ff0000": { name: "Vermell" }, // callback: function () { return true; } },
-                "#00ff00": { name: "Verd" },
-                "#0000ff": { name: "Blau" },
-                "delete": { name: "Eliminar" }
-            }
-        });
+        clickRight(x, y, this);        
     },
-
     onDoubleClick: function() {
-    	this.label = new draw2d.shape.basic.Label({text:"etiqueta", color:"#0d0d0d", fontColor:"#0d0d0d"});
-        this.add(this.label, new draw2d.layout.locator.CenterLocator(this));
-        this.label.installEditor(new draw2d.ui.LabelInplaceEditor());
+        setLabel(this);
     }
 });
 
 var MyCircle = draw2d.shape.basic.Circle.extend({
     init: function(attr, setter, getter) {
         this._super($.extend(attr), setter, getter); 
-    },    
+    },
+    onContextMenu: function(x, y) {
+        clickRight(x, y, this);
+    },
+    onDoubleClick: function() {
+        setLabel(this);
+    }   
 });
 
 /* var MyMailSVG = draw2d.SVGFigure.extend({
@@ -61,6 +73,12 @@ var MyMailImage = draw2d.shape.basic.Image.extend({
         this.path = './assets/img/mail.svg';
         this.setResizeable(true);
     },
+    onContextMenu: function(x, y) {
+        clickRight(x, y, this);        
+    },
+    onDoubleClick: function() {
+        setLabel(this);
+    }
 });
 
 var outputLocator = new draw2d.layout.locator.RightLocator;
