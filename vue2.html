@@ -63,13 +63,6 @@
 
                     app.figCreatePort(figSquare);
                     app.canvas.add(figSquare, 50, 50);
-                    var c = new draw2d.Connection({
-                        sourceDecorator: new draw2d.decoration.connection.CircleDecorator(),
-                        targetDecorator: new draw2d.decoration.connection.ArrowDecorator(),
-                        source: figSquare.getOutputPort(0),
-                        target: figSquare.getInputPort(0)
-                    });
-                    app.canvas.add(c);
                 }
             }
         })

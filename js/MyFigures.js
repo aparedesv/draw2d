@@ -83,3 +83,26 @@ var MyMailImage = draw2d.shape.basic.Image.extend({
 
 var outputLocator = new draw2d.layout.locator.RightLocator;
 var inputLocator = new draw2d.layout.locator.LeftLocator;
+
+var MyConnection = draw2d.Connection.extend({
+    init: function(attr, setter, getter) {
+      this._super(attr, setter, getter);
+  
+      // Create a default arrow shape
+      var arrow = new draw2d.shape.basic.Polygon({
+        vertices: [
+          {x: 0, y: 0},
+          {x: -10, y: 10},
+          {x: -10, y: -10}
+        ],
+        stroke: 2,
+        color: "#000000",
+        bgColor: "#ffffff"
+      });
+  
+      // Add the arrow shape to the end of the connection
+      var locator = new draw2d.layout.locator.ManhattanMidpointLocator(this);
+      arrow.setPosition(locator.getX(), locator.getY());
+      this.add(arrow, locator);
+    }
+  });
