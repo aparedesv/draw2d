@@ -81,6 +81,38 @@ var MyMailImage = draw2d.shape.basic.Image.extend({
     }
 });
 
+// Define a custom figure class that extends the Rectangle class
+var MyFormFigure = draw2d.shape.basic.Rectangle.extend({
+
+    // Override the createShapeElement() method to create a custom HTML element
+    createShapeElement: function() {
+        var shape = this._super();
+        let option = 'toni';
+
+        if (option == 'andreu') {            
+            // Create a new HTML element with custom content
+            var el = document.createElement('div');
+            el.classList.add('custom-figure');
+            el.innerHTML = this.userData;    
+            // Add the HTML element to the shape element
+            shape.node.appendChild(el);
+        }
+        if (option == 'toni') {
+            this.icon = new draw2d.shape.icon.BarChart({
+                color: '#fff',
+                height: 35,
+                width: 35,
+            })
+            this.add(this.icon, new draw2d.layout.locator.XYAbsPortLocator({
+                x: 5,
+                y: 7,
+            }));
+        }
+        return shape;
+    }
+
+});
+
 var outputLocator = new draw2d.layout.locator.RightLocator;
 var inputLocator = new draw2d.layout.locator.LeftLocator;
 

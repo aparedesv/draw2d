@@ -17,6 +17,7 @@
 <body>
     <div id="app">
         <aside>
+            <form-figure></form-figure>
             <square-figure></square-figure>
             <circle-figure></circle-figure>
             <mail-figure></mail-figure>
@@ -42,6 +43,30 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script>
         
+        var formFigure = Vue.component('form-figure', {
+            template: '<svg @click="createForm" xmlns="http://www.w3.org/2000/svg" fill="#fff" height="75" width="75"><path transform="translate(14, 14)" d="M15.95 35.5h16.1v-3h-16.1Zm0-8.5h16.1v-3h-16.1ZM11 44q-1.2 0-2.1-.9Q8 42.2 8 41V7q0-1.2.9-2.1Q9.8 4 11 4h18.05L40 14.95V41q0 1.2-.9 2.1-.9.9-2.1.9Zm16.55-27.7V7H11v34h26V16.3ZM11 7v9.3V7v34V7Z"/></svg>',
+            data() {
+                return {
+                    width: '175px',
+                    height: '50px',                    
+                }
+            },
+            methods: {
+                createForm() {
+                    let figForm = new MyFormFigure({
+                        width: this.width,
+                        height: this.height,
+                        backgroundColor: '#646464',
+                        borderColor: '#fff',
+                    });
+
+                    // app.figCreatePort(figMail);
+                    app.canvas.add(figForm, 50, 50);
+                }
+            }
+
+        });
+        
         var squareFigure = Vue.component('square-figure', {
             template: '<div @click="createSquare" style="width: 75px; height: 75px; background-color: hotpink;"></div>',
             // template: '<button @click="myMethod">Click me</button>',
@@ -65,7 +90,7 @@
                     app.canvas.add(figSquare, 50, 50);
                 }
             }
-        })
+        });
 
         var circleFigure = Vue.component('circle-figure', {
             template: '<div @click="createCircle" style="width: 75px; height: 75px; border-radius: 50%; background-color: aqua;"></div>',
@@ -119,8 +144,10 @@
                 canvas: null
             },
             components: {
+                formFigure,
                 squareFigure,
-                circleFigure
+                circleFigure,
+                mailFigure,
             },
             methods: {
                 figCreatePort(fig) {
