@@ -102,12 +102,36 @@ var MyFormFigure = draw2d.shape.basic.Rectangle.extend({
                 color: '#fff',
                 height: 35,
                 width: 35,
-            })
+            });
             this.add(this.icon, new draw2d.layout.locator.XYAbsPortLocator({
                 x: 5,
                 y: 7,
             }));
         }
+        return shape;
+    }
+
+});
+
+var MyFormIcon = draw2d.shape.basic.Rectangle.extend({
+
+    // Override the createShapeElement() method to create a custom HTML element
+    createShapeElement: function() {
+        var shape = this._super();
+        
+        this.icon = new draw2d.shape.basic.Image({
+            path: "./assets/icons/description_FILL0_wght400_GRAD0_opsz48.svg",
+            width: 35,
+            height: 35,
+            x: 5,
+            y: 7
+        });
+        
+        this.add(this.icon, new draw2d.layout.locator.XYAbsPortLocator({
+            x: 5,
+            y: 7,
+        }));
+        
         return shape;
     }
 
