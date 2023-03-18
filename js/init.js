@@ -19,6 +19,71 @@ var actions = [
         ]
     },
     {
+        title: "sending",
+        icons: [
+            {
+                vueComponent: "email-figure",
+                name: "email",
+                svgPath: "./assets/icons/mail_FILL0_wght400_GRAD0_opsz48 - c�pia.svg",
+            },
+            {
+                vueComponent: "notificaction-figure",
+                name: "notificaction",
+                svgPath: "./assets/icons/send_to_mobile_FILL0_wght400_GRAD0_opsz48.svg",
+            },
+            {
+                vueComponent: "sms-figure",
+                name: "sms",
+                svgPath: "./assets/icons/sms_FILL0_wght400_GRAD0_opsz48.svg",
+            },
+            {
+                vueComponent: "campaign-figure",
+                name: "campaign",
+                svgPath: "./assets/icons/campaign_FILL0_wght400_GRAD0_opsz48 - c�pia.svg",
+            },
+        ]
+    },
+    {
+        title: "conditions & workflow",
+        icons: [
+            {
+                vueComponent: "wait-figure",
+                name: "wait",
+                svgPath: "./assets/icons/schedule_FILL0_wght400_GRAD0_opsz48.svg",
+            },
+            {
+                vueComponent: "ifelse-figure",
+                name: "ifelse",
+                svgPath: "./assets/icons/rule_folder_FILL0_wght400_GRAD0_opsz48.svg",
+            },
+            {
+                vueComponent: "end-figure",
+                name: "end",
+                svgPath: "./assets/icons/stop_circle_FILL0_wght400_GRAD0_opsz48.svg",
+            },
+        ]
+    },
+    {
+        title: "contact",
+        icons: [
+            {
+                vueComponent: "person-figure",
+                name: "person",
+                svgPath: "./assets/icons/account_box_FILL0_wght400_GRAD0_opsz48.svg",
+            },
+            {
+                vueComponent: "corporate-figure",
+                name: "corporate",
+                svgPath: "./assets/icons/corporate_fare_FILL0_wght400_GRAD0_opsz48.svg",
+            },
+            {
+                vueComponent: "organitzation-figure",
+                name: "organitzation",
+                svgPath: "./assets/icons/store_FILL0_wght400_GRAD0_opsz48.svg",
+            },
+        ]
+    },
+    {
         title: "benefits",
         icons: [
             {
@@ -90,125 +155,3 @@ document.addEventListener("DOMContentLoaded",function () {
         sidebar.appendChild(actionWrapper);
     });
 });
-
-/*
-document.addEventListener("DOMContentLoaded",function () {
-    
-    let sidebar = document.getElementById('sidebar');
-    
-    actions.forEach(el => {
-        let actionWrapper = document.createElement("div");
-        actionWrapper.classList.add("action-wrapper");
-    
-        let title = document.createElement("h3");
-        title.classList.add("title");
-        title.textContent = el.title;
-
-        let iconsWrapper = document.createElement("div");
-        iconsWrapper.classList.add("icons-wrapper");        
-        
-        el.icons.forEach(icon => {
-            let iconWrapper = document.createElement("div");
-            iconWrapper.classList.add("icon-wrapper");
-            
-            let svgImage = document.createElement("img");
-            svgImage.setAttribute("src", icon.svgPath);
-            svgImage.setAttribute(icon.clicAttr, icon.clicVal);
-            
-            let iconTitle = document.createElement("h6");
-            iconTitle.classList.add("icon-title");
-            iconTitle.textContent = icon.name;
-            
-            iconWrapper.appendChild(svgImage);
-            iconWrapper.appendChild(iconTitle);
-            iconsWrapper.appendChild(iconWrapper);
-        });
-
-        actionWrapper.appendChild(title);
-        actionWrapper.appendChild(iconsWrapper);
-        sidebar.appendChild(actionWrapper);
-    });
-
-});
-*/
-
-// function setElementAttributes (element, attrsValues){
-//     for (const [key, value] of Object.entries(attrsValues)) {
-//         element.setAttribute(key, value);
-//     }
-// }
-
-// function setElementStyles (element, styles) {
-//     for (const [property, style] of Object.entries(styles)) {
-//         element.style[property] = style;
-//     }
-// }
-
-// function addElementToAside (element) {
-//     let elAside = document.getElementsByTagName('aside')[0];
-//     elAside.appendChild(element);
-// }
-
-// function download(content, fileName, contentType) {
-//     var a = document.createElement("a");
-//     var file = new Blob([content], {type: contentType});
-//     a.href = URL.createObjectURL(file);
-//     a.download = fileName;
-//     a.click();
-// }
-
-// document.addEventListener("DOMContentLoaded",function () {
-
-//     let square = document.createElement("div");
-//     setElementAttributes(square, {
-//         // onselectstart: "javascript:/*IE8 hack*/return false",
-//         id: "square",
-//     });
-//     setElementStyles(square, {
-//         width: "75px",
-//         height: "75px",
-//         backgroundColor: "hotpink",
-//     });
-//     addElementToAside(square);
-
-//     let circle = document.createElement("div");    
-//     setElementAttributes(circle, {
-//         // onselectstart: "javascript:/*IE8 hack*/return false",
-//         id: "circle",
-//     });
-//     setElementStyles(circle, {
-//         width: "75px",
-//         height: "75px",
-//         borderRadius: "50%",
-//         backgroundColor: "aqua",
-//     });
-//     addElementToAside(circle);
-    
-//     let save = document.createElement("button");
-//     save.id = "save";
-//     save.innerHTML = "SAVE";
-//     addElementToAside(save);
-    
-//     let load = document.createElement("button");
-//     load.id = "load";
-//     load.innerHTML = "LOAD";
-//     addElementToAside(load);
-
-// });
-
-// const modal = document.getElementById("myModal");
-// const span = document.getElementById("close");
-// const fileList = document.getElementById("file-list");
-
-// span.onclick = function() {
-//   modal.style.display = "none";
-//   fileList.innerHTML = "";
-// }
-
-// // When the user clicks anywhere outside of the modal, close it
-// window.onclick = function(event) {
-//   if (event.target == modal) {
-//     modal.style.display = "none";
-//     fileList.innerHTML = "";
-//   }
-// }
