@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ca">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="#">
+    <title>JS Flow</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://freegroup.github.io/draw2d/jquery.js"></script>
+    <script src="https://freegroup.github.io/draw2d/jquery-ui.js"></script>
+    <script src="https://freegroup.github.io/draw2d/draw2d.js"></script>
+    <script src="js/MyFigures.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        
+        <main id="workspace">
+            <div id="my-figures" style="width: 100%; height: 100%; cursor: default;"></div>
+        </main>
+
+        <aside>
+            <menu-figure
+                template='<svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M16 38q-5.85 0-9.925-4.075Q2 29.85 2 24q0-5.85 4.075-9.925Q10.15 10 16 10q1.8 0 3.475.425T22.6 11.65q-.65.5-1.2 1.05-.55.55-1.1 1.15-1-.4-2.075-.625Q17.15 13 16 13q-4.55 0-7.775 3.2Q5 19.4 5 24q0 4.55 3.225 7.775Q11.45 35 16 35q1.15 0 2.225-.225 1.075-.225 2.075-.625.55.6 1.1 1.15.55.55 1.2 1.05-1.45.8-3.125 1.225Q17.8 38 16 38Zm16 0q-1.8 0-3.475-.425T25.4 36.35q.65-.5 1.2-1.05.55-.55 1.1-1.15 1 .4 2.075.625Q30.85 35 32 35q4.6 0 7.8-3.225T43 24q0-4.6-3.2-7.8T32 13q-1.15 0-2.225.225-1.075.225-2.075.625-.55-.6-1.1-1.15-.55-.55-1.2-1.05 1.45-.8 3.125-1.225Q30.2 10 32 10q5.85 0 9.925 4.075Q46 18.15 46 24q0 5.85-4.075 9.925Q37.85 38 32 38Zm-8-2.5q-2.85-1.95-4.425-5Q18 27.45 18 24t1.575-6.5q1.575-3.05 4.425-5 2.85 1.95 4.425 5Q30 20.55 30 24t-1.575 6.5q-1.575 3.05-4.425 5Z"/></svg>'
+                title="Segment"
+                figure="segment"
+            ></menu-figure>
+            <menu-figure
+                template='<svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M15.95 35.5h16.1v-3h-16.1Zm0-8.5h16.1v-3h-16.1ZM11 44q-1.2 0-2.1-.9Q8 42.2 8 41V7q0-1.2.9-2.1Q9.8 4 11 4h18.05L40 14.95V41q0 1.2-.9 2.1-.9.9-2.1.9Zm16.55-27.7V7H11v34h26V16.3ZM11 7v9.3V7v34V7Z"/></svg>'
+                title="Form"
+                figure="form"
+            ></menu-figure>
+
+            <square-figure></square-figure>
+            <circle-figure></circle-figure>
+            <mail-figure></mail-figure>
+
+            <button id="save" @click="save">SAVE</button>
+            <button id="load" @click="load">LOAD</button>
+            <button id="clear" @click="clearCanvas">CLEAR</button>
+        </aside>
+    </div>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span id="close">&times;</span>
+            <ul id="file-list"></ul>
+        </div>
+    </div>
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+        
+        var menuFigure = Vue.component('menu-figure', {
+            props: [
+                'template',
+                'title',
+                'figure'
+            ],
+            template: '<div @click="createFigure" style="text-align:center;"><span v-html="template"></span><br>{{ title }}</div>',
+            data() {
+                return {
+                    width: '75px',
+                    height: '75px',
+                    // backgroundColor: 'hotpink'
+                }
+            },
+            methods: {
+                createFigure() {
+
+                    console.log(this.figure);
+
+                   /*  let figSquare;
+
+                    switch (this.figure) {
+                        case 'segment':
+                                
+                            figSquare = new CustomFigure({
+                                
+                            });
+                            
+                        break;
+                    
+                        default:
+
+                            figSquare = new MySquare({
+                                width: this.width,
+                                height: this.height,
+                                bgColor: this.backgroundColor,
+                                stroke: 0,
+                            });
+                            
+                        break;
+                    } */
+
+                   // Create a new custom figure
+                    var figSquare = new CustomFigure({
+                        width: 200,
+                        height: 50,
+                        bgColor: "#ffffff",
+                        // alpha: 1,
+                        draggable: true,
+                        /* userData: '<svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M16 38q-5.85 0-9.925-4.075Q2 29.85 2 24q0-5.85 4.075-9.925Q10.15 10 16 10q1.8 0 3.475.425T22.6 11.65q-.65.5-1.2 1.05-.55.55-1.1 1.15-1-.4-2.075-.625Q17.15 13 16 13q-4.55 0-7.775 3.2Q5 19.4 5 24q0 4.55 3.225 7.775Q11.45 35 16 35q1.15 0 2.225-.225 1.075-.225 2.075-.625.55.6 1.1 1.15.55.55 1.2 1.05-1.45.8-3.125 1.225Q17.8 38 16 38Zm16 0q-1.8 0-3.475-.425T25.4 36.35q.65-.5 1.2-1.05.55-.55 1.1-1.15 1 .4 2.075.625Q30.85 35 32 35q4.6 0 7.8-3.225T43 24q0-4.6-3.2-7.8T32 13q-1.15 0-2.225.225-1.075.225-2.075.625-.55-.6-1.1-1.15-.55-.55-1.2-1.05 1.45-.8 3.125-1.225Q30.2 10 32 10q5.85 0 9.925 4.075Q46 18.15 46 24q0 5.85-4.075 9.925Q37.85 38 32 38Zm-8-2.5q-2.85-1.95-4.425-5Q18 27.45 18 24t1.575-6.5q1.575-3.05 4.425-5 2.85 1.95 4.425 5Q30 20.55 30 24t-1.575 6.5q-1.575 3.05-4.425 5Z"/></svg>' */
+                        userData: '<tspan>hola</tspan>'
+                    });
+
+                    app.figCreatePort(figSquare);
+                    app.canvas.add(figSquare, 50, 50);
+                }
+            }
+        })
+        
+        var squareFigure = Vue.component('square-figure', {
+            template: '<div @click="createSquare" style="width: 75px; height: 75px; background-color: hotpink;"></div>',
+            // template: '<button @click="myMethod">Click me</button>',
+            data() {
+                return {
+                    width: '75px',
+                    height: '75px',
+                    backgroundColor: 'hotpink'
+                }
+            },
+            methods: {
+                createSquare() {
+                    let figSquare = new MySquare({
+                        width: this.width,
+                        height: this.height,
+                        bgColor: this.backgroundColor,
+                        stroke: 0,
+                    });
+
+                    app.figCreatePort(figSquare);
+                    app.canvas.add(figSquare, 50, 50);
+                }
+            }
+        })
+
+        var circleFigure = Vue.component('circle-figure', {
+            template: '<div @click="createCircle" style="width: 75px; height: 75px; border-radius: 50%; background-color: aqua;"></div>',
+            data() {
+                return {
+                    width: '75px',
+                    height: '75px',
+                    backgroundColor: 'aqua'
+                }
+            },
+            methods: {
+                createCircle() {
+                    let figCircle = new MyCircle({
+                        width: this.width,
+                        height: this.height,
+                        bgColor: this.backgroundColor,
+                        stroke: 0,
+                    });
+
+                    app.figCreatePort(figCircle);
+                    app.canvas.add(figCircle, 50, 50);
+                }
+            }
+        });
+
+        var mailFigure = Vue.component('mail-figure', {
+            template: '<svg @click="createMail" xmlns:xlink="http://www.w3.org/1999/xlink" width="75" xmlns="http://www.w3.org/2000/svg" height="55" id="screenshot-6b7b1b5b-6359-80c9-8001-ee09e7d0e5af" viewBox="330 326 228 183" style="-webkit-print-color-adjust: exact;" fill="none" version="1.1"><g id="shape-6b7b1b5b-6359-80c9-8001-ee09e7d0e5af"><g id="fills-6b7b1b5b-6359-80c9-8001-ee09e7d0e5af"><path rx="0" ry="0" d="M347.1,509C342.54,509,338.55,507.284,335.13,503.853C331.71,500.422,330,496.419,330,491.844L330,343.156C330,338.581,331.71,334.578,335.13,331.147C338.55,327.716,342.54,326,347.1,326L540.9,326C545.46,326,549.45,327.716,552.87,331.147C556.29,334.578,558,338.581,558,343.156L558,491.844C558,496.419,556.29,500.422,552.87,503.853C549.45,507.284,545.46,509,540.9,509ZM444,422.647L347.1,358.883L347.1,491.844L540.9,491.844L540.9,358.883ZM444,405.491L539.76,343.156L348.525,343.156ZM347.1,358.883L347.1,343.156L347.1,491.844Z" style="fill: rgb(170, 237, 46); fill-opacity: 1;"/></g></g></svg>',
+            data() {
+                return {
+                    width: '75px',
+                    height: '55px',
+                    // svgMail: '<?xml version="1.0" encoding="UTF-8"?><svg xmlns: xlink = "http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="228" height="183" id="screenshot-6b7b1b5b-6359-80c9-8001-ee09e7d0e5af" viewBox="330 326 228 183" style="-webkit-print-color-adjust: exact;" fill="none" version="1.1"><g id="shape-6b7b1b5b-6359-80c9-8001-ee09e7d0e5af"><g id="fills-6b7b1b5b-6359-80c9-8001-ee09e7d0e5af"><path rx="0" ry="0" d="M347.1,509C342.54,509,338.55,507.284,335.13,503.853C331.71,500.422,330,496.419,330,491.844L330,343.156C330,338.581,331.71,334.578,335.13,331.147C338.55,327.716,342.54,326,347.1,326L540.9,326C545.46,326,549.45,327.716,552.87,331.147C556.29,334.578,558,338.581,558,343.156L558,491.844C558,496.419,556.29,500.422,552.87,503.853C549.45,507.284,545.46,509,540.9,509ZM444,422.647L347.1,358.883L347.1,491.844L540.9,491.844L540.9,358.883ZM444,405.491L539.76,343.156L348.525,343.156ZM347.1,358.883L347.1,343.156L347.1,491.844Z" style="fill: rgb(170, 237, 46); fill-opacity: 1;"></path></g></g></svg>',
+                }
+            },
+            methods: {
+                createMail() {
+                    let figMail = new MyMailImage({
+                        width: this.width,
+                        height: this.height,
+                    });
+
+                    app.figCreatePort(figMail);
+                    app.canvas.add(figMail, 50, 50);
+                }
+            }
+        });
+        
+        var app = new Vue({
+            el: '#app',
+            data: {
+                canvas: null
+            },
+            components: {
+                menuFigure,
+                squareFigure,
+                circleFigure,
+                mailFigure
+            },
+            methods: {
+                figCreatePort(fig) {
+                    fig.createPort("output", outputLocator);
+                    fig.createPort("input", inputLocator);
+                },
+                createCanvas() {
+                    let canvas = new draw2d.Canvas("my-figures");
+                    this.canvas = canvas;
+                },
+                clearCanvas() {
+                    this.canvas.clear();
+                },
+                save() {
+                    let writer = new draw2d.io.json.Writer();
+                    writer.marshal(this.canvas, function (json) {
+                        // convert the json object into string representation
+                        var jsonTxt = JSON.stringify(json, null, 2);
+                        window.localStorage.setItem('draw_saved', jsonTxt);
+                        // insert the json string into a DIV for preview or post, send via ajax to the server...
+                        // $("#json").text(jsonTxt);
+                        // save to local machine
+                        // download(jsonTxt, 'jsonTxt.json', 'text/plain');
+                    });
+                },
+                load() {
+                    let jsonDraw = window.localStorage.getItem('draw_saved');
+                    // unmarshal the JSON document into the canvas
+                    // (load)
+                    this.canvas.clear();
+                    let reader = new draw2d.io.json.Reader();
+                    reader.unmarshal(this.canvas, jsonDraw);
+                }
+            },
+            mounted() {
+                this.createCanvas();
+            }
+        });
+    </script>
+</body>
+
+</html>
