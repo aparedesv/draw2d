@@ -67,6 +67,17 @@
         </aside>        
     </div>
     
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+    
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Afegir elements...</p>
+        </div>
+    
+    </div>
+    
     <!-- development version, includes helpful console warnings -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <!-- <script src="js/init.js"></script> -->
@@ -130,22 +141,16 @@
                 clearCanvas() {
                     this.canvas.clear();
                 },
-                save() {
+                save() {                    
                     let writer = new draw2d.io.json.Writer();
                     writer.marshal(this.canvas, function (json) {
-                        // convert the json object into string representation
                         var jsonTxt = JSON.stringify(json, null, 2);
                         window.localStorage.setItem('draw_saved', jsonTxt);
-                        // insert the json string into a DIV for preview or post, send via ajax to the server...
-                        // $("#json").text(jsonTxt);
-                        // save to local machine
-                        // download(jsonTxt, 'jsonTxt.json', 'text/plain');
+                        // console.log(jsonTxt);
                     });
                 },
                 load() {
-                    let jsonDraw = window.localStorage.getItem('draw_saved');
-                    // unmarshal the JSON document into the canvas
-                    // (load)
+                    let jsonDraw = window.localStorage.getItem('draw_saved');                    
                     this.canvas.clear();
                     let reader = new draw2d.io.json.Reader();
                     reader.unmarshal(this.canvas, jsonDraw);

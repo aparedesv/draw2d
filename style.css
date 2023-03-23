@@ -1,15 +1,17 @@
 :root {
     --color-verd-sherpa: #5dbecb;
+    --color-blanc-sherpa: #fff;
+    --color-negre-sherpa: #000;
 }
 
 body {
     margin: 0 auto;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Courier New', monospace;
 }
 
 #app {
     display: grid;
-    grid-template-columns: 1fr 350px;
+    grid-template-columns: 1fr 350px;    
 }
 
 aside {
@@ -37,7 +39,6 @@ main {
 
 .title {
     text-align: center;
-    font-family: 'Courier New', monospace;
     font-size: 0.95rem;
     text-transform: uppercase;
     font-weight: lighter;
@@ -76,8 +77,49 @@ aside button {
     text-transform: uppercase;
     text-align: center;
     border-radius: 0;
-    border: 3px solid #fff;
+    border: 3px solid var(--color-blanc-sherpa);
     background-color: var(--color-verd-sherpa);
     font-weight: bolder;
     cursor: pointer;
 }
+
+/* MODAL > */
+
+.modal {
+    display: none; /* Hidden by default */
+    position: absolute; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    overflow: auto; /* Enable scroll if needed */
+}
+
+.modal-content {
+    background-color: var(--color-blanc-sherpa);
+    margin: auto;
+    padding: 15px;
+    border: 1px solid var(--color-verd-sherpa);
+    border-radius: 30px;
+    width: 225px;
+}
+
+.modal-content p {
+    margin-top: 0;
+}
+
+.close {
+    color: var(--color-verd-sherpa);
+    font-size: 28px;
+    position: absolute;
+    right: 10px;
+    top: 5px;
+}
+
+.close:hover,
+.close:focus {
+    color: var(--color-negre-sherpa);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* MODAL < */

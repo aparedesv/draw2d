@@ -12,10 +12,7 @@ function clickRight(x, y, item) {
         },
         callback: $.proxy(function (key, options) {
             if (key == "delete") {
-                //  without undo/redo support
-                //  item.getCanvas().removeFigure(item);
-
-                //  with undo/redo support
+                //  undo/redo support
                 var cmd = new draw2d.command.CommandDelete(item);
                 item.getCanvas().getCommandStack().execute(cmd);
             } else {
@@ -39,6 +36,26 @@ function setLabel(item) {
     item.label.installEditor(new draw2d.ui.LabelInplaceEditor());
 }
 
+function showOptions(x, y) {
+    // console.log(x, y);
+    var modal = document.getElementById("myModal");    
+    modal.style.display = "block";
+    modal.style.left = x + "px";
+    modal.style.top = y + "px";
+    var span = document.getElementsByClassName("close")[0];
+    
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+}
+
 var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
     
     // Override the createShapeElement() method to create a custom HTML element
@@ -58,11 +75,27 @@ var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
         
         return shape;
     },
+
     onContextMenu: function(x, y) {
         clickRight(x, y, this);
     },
+    
     onDoubleClick: function() {
         setLabel(this);
+    },
+
+    onClick: function (emitter, event) {
+        let xPos = this.x + this.width + 20;
+        let yPos = this.y;
+
+        showOptions(xPos, yPos);
+
+        // console.log(
+        //     this.x, 
+        //     this.width,
+        //     this.y,
+        //     this.height,
+        // );
     }
 
 });
