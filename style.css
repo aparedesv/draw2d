@@ -1,6 +1,8 @@
 :root {
     --color-verd-sherpa: #5dbecb;
+    --color-verd-sherpa-btn: #92d050;
     --color-blanc-sherpa: #fff;
+    --color-blau-sherpa: #d5e5f4;
     --color-negre-sherpa: #000;
 }
 
@@ -83,6 +85,10 @@ aside button {
     cursor: pointer;
 }
 
+.border-2 {
+    border: 2px solid #000;
+}
+
 /* MODAL > */
 
 .modal {
@@ -97,7 +103,7 @@ aside button {
 .modal-content {
     background-color: var(--color-blanc-sherpa);
     margin: auto;
-    padding: 15px;
+    padding: 15px 30px 15px 15px;
     border: 1px solid var(--color-verd-sherpa);
     border-radius: 30px;
     width: 225px;
@@ -120,6 +126,44 @@ aside button {
     color: var(--color-negre-sherpa);
     text-decoration: none;
     cursor: pointer;
+}
+
+.content-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.content-wrapper select {
+    /* appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none; */
+    background-color: transparent;
+    /* border: 2px solid #000; */
+    font-family: inherit;
+    width: 100%;
+}
+
+.content-wrapper select option{
+    padding-top: 3px;
+}
+
+.content-wrapper button {
+    width: 100%;
+    font-family: inherit;
+    text-align: center;
+    border-radius: 5px;
+    border: 3px solid var(--color-verd-sherpa);
+    padding: 8px 0;
+    cursor: pointer;
+}
+
+.content-wrapper .btn-action {
+    background-color: var(--color-blau-sherpa);
+}
+
+.content-wrapper .btn-save {
+    background-color: var(--color-verd-sherpa-btn);
 }
 
 /* MODAL < */

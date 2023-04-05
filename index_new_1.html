@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="#">
+    <title>JS Flow Moundata/Sherpa</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="app">
+        <main class="workspace">
+            <!-- <div id="my-figures" style="width: 100%; height: 100%; cursor: default;"></div> -->
+        </main>
+        <aside>
+            <div class="action-wrapper">
+                <h3 class="title">list</h3>
+                <div class="icons-wrapper">
+                    <div>
+                        <img class="item" src="./assets/icons/join_inner_FILL0_wght400_GRAD0_opsz48.svg" draggable="true">
+                    </div>
+                    <div>
+                        <img class="item" src="./assets/icons/description_FILL0_wght400_GRAD0_opsz48.svg" draggable="true">
+                    </div>
+                </div>
+            </div>
+            
+    
+            <div class="action-wrapper buttons">
+                <button id="save" @click="save">SAVE</button>
+                <button id="load" @click="load">LOAD</button>
+                <button id="clear" @click="clearCanvas">CLEAR</button>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        // Seleccionem els elements de la barra lateral
+        const items = document.querySelectorAll('.item');
+
+        // Afegim als elements un event listener per detectar quan es comença a arrossegar
+        items.forEach(item => {
+            item.addEventListener('dragstart', event => {
+                // Guardem l'ID de l'element que s'està arrossegant
+                event.dataTransfer.setData('text/plain', item.outerHTML);
+            });
+        });
+
+        // Seleccionem l'àrea de treball i afegim un event listener per detectar quan es deixen anar elements arrossegats
+        const workspace = document.querySelector('.workspace');
+        workspace.addEventListener('drop', event => {
+            // Evitem el comportament per defecte que és obrir l'element arrossegat en una nova pestanya
+            event.preventDefault();
+
+            // Agafem la referència a l'element arrossegat
+            const itemRef = event.dataTransfer.getData('text/plain');
+
+            // Creem un element a partir de la referència i el posem dins de l'àrea de treball
+            const item = document.createElement('div');
+            item.innerHTML = itemRef;
+            workspace.appendChild(item.cloneNode(true));
+        });
+
+        workspace.addEventListener('dragover', event => {
+            // Evitem el comportament per defecte que és no deixar arrossegar elements a l'àrea de treball
+            event.preventDefault();
+        });
+    </script>
+
+</body>
+
+</html>

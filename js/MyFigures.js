@@ -36,15 +36,35 @@ function setLabel(item) {
     item.label.installEditor(new draw2d.ui.LabelInplaceEditor());
 }
 
-function showOptions(x, y) {
-    // console.log(x, y);
-    var modal = document.getElementById("myModal");    
+function showOptions(x, y, id, figure) {
+    let appDiv = document.getElementById("app");
+    let modal = document.createElement('div');
+    modal.id = id;
     modal.style.display = "block";
     modal.style.left = x + "px";
     modal.style.top = y + "px";
-    var span = document.getElementsByClassName("close")[0];
+    modal.classList.add('modal');
+    let modalContent = document.createElement('div');
+    modalContent.classList.add('modal-content');
+    let close = document.createElement('span');
+    close.classList.add('close');
+    close.innerHTML = '&times';
+
+    modalContent.appendChild(close);
+    modal.appendChild(modalContent);
+    appDiv.appendChild(modal);
+
+    switch (figure) {
+        case "segment":
+            optionsSegment(modalContent);
+            break;
     
-    span.onclick = function() {
+        default:
+            break;
+    }
+
+    close.onclick = function() {
+        console.log("hide");
         modal.style.display = "none";
     }
 
@@ -56,6 +76,59 @@ function showOptions(x, y) {
     }
 }
 
+function optionsSegment(modalContent) {
+    const wrapperDiv = document.createElement('div');
+    wrapperDiv.classList.add('content-wrapper');
+
+    for (let i = 1; i <= 6; i++) {
+        const div = document.createElement('div');
+        div.classList.add(`div${i}`);
+
+        if (i === 1) {
+            div.textContent = 'Select Segment List:';
+        }        
+        
+        if (i === 2) {
+            const select = document.createElement('select');
+            const option1 = document.createElement('option');
+            const option2 = document.createElement('option');
+            option1.textContent = 'Option 1';
+            option2.textContent = 'Option 2';
+            select.classList.add('border-2')
+            select.appendChild(option1);
+            select.appendChild(option2);
+            div.appendChild(select);
+        }
+
+        if (i === 3) {
+            div.textContent = 'Run List:';            
+        }
+
+        if (i === 4) {
+            div.classList.add('border-2');
+        }
+                
+        if (i === 5) {
+            const button = document.createElement('button');
+            button.textContent = 'New Segment';
+            button.classList.add('btn-action');
+            div.appendChild(button);
+        }
+
+        if (i === 6) {
+            const button = document.createElement('button');
+            button.textContent = 'Save';
+            button.classList.add('btn-save');
+            div.appendChild(button);
+        }
+        
+        wrapperDiv.appendChild(div);
+    }
+
+    modalContent.appendChild(wrapperDiv);
+
+}
+
 var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
     
     // Override the createShapeElement() method to create a custom HTML element
@@ -63,7 +136,7 @@ var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
         var shape = this._super();
         
         this.icon = new draw2d.shape.basic.Image({
-            path: "./assets/icons/" + this.userData,
+            path: "./assets/icons/" + this.userData[0],
             width: 35,
             height: 35,
         });
@@ -88,21 +161,15 @@ var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
     onClick: function (emitter, event) {
         let xPos = this.x + this.width + 20;
         let yPos = this.y;
+        // console.log(this.id);
 
-        showOptions(xPos, yPos);
-
-        // console.log(
-        //     this.x, 
-        //     this.width,
-        //     this.y,
-        //     this.height,
-        // );
+        showOptions(xPos, yPos, this.id, this.userData[1]);
     }
 
 });
 
-var outputLocator = new draw2d.layout.locator.RightLocator;
-var inputLocator = new draw2d.layout.locator.LeftLocator;
+var outputLocator = new draw2d.layout.locator.TopLocator;
+var inputLocator = new draw2d.layout.locator.BottomLocator;
 
 var MyConnection = draw2d.Connection.extend({
     init: function(attr, setter, getter) {
