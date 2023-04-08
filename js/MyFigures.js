@@ -36,47 +36,65 @@ function setLabel(item) {
     item.label.installEditor(new draw2d.ui.LabelInplaceEditor());
 }
 
-function showOptions(x, y, id, figure) {
-    let appDiv = document.getElementById("app");
-    let modal = document.createElement('div');
-    modal.id = id;
-    modal.style.display = "block";
-    modal.style.left = x + "px";
-    modal.style.top = y + "px";
-    modal.classList.add('modal');
-    let modalContent = document.createElement('div');
-    modalContent.classList.add('modal-content');
-    let close = document.createElement('span');
-    close.classList.add('close');
-    close.innerHTML = '&times';
-
-    modalContent.appendChild(close);
-    modal.appendChild(modalContent);
-    appDiv.appendChild(modal);
-
-    switch (figure) {
-        case "segment":
-            optionsSegment(modalContent);
-            break;
+/**
+ * Create and display the modal
+ * 
+ * @param {number} x x position
+ * @param {number} y y position
+ * @param {string} id id element
+ * @param {string} action action type (segment, email, etc.)
+ */
+function showOptions(x, y, id, action) {
+    if(document.querySelector("div#" + CSS.escape(id)) !== null) {        
+        document.getElementById(id).style.display = "block";
+    } else {
+        let appDiv = document.getElementById("app");
+        let modal = document.createElement('div');
+        modal.id = id;
+        modal.style.display = "block";
+        modal.style.left = x + "px";
+        modal.style.top = y + "px";
+        modal.classList.add('modal');
+        let modalContent = document.createElement('div');
+        modalContent.classList.add('modal-content');
+        let close = document.createElement('span');
+        close.classList.add('close');
+        close.innerHTML = '&times';
     
-        default:
-            break;
-    }
-
-    close.onclick = function() {
-        console.log("hide");
-        modal.style.display = "none";
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-      if (event.target == modal) {
-        modal.style.display = "none";
-      }
+        modalContent.appendChild(close);
+        modal.appendChild(modalContent);
+        appDiv.appendChild(modal);
+    
+        switch (action) {
+            case "segment":
+                optionsSegment(modalContent, id);
+                break;
+        
+            default:
+                break;
+        }
+    
+        close.onclick = function() {
+            modal.style.display = "none";
+        }
+    
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        }
     }
 }
 
-function optionsSegment(modalContent) {
+/**
+ * Create and display options inside the modal according 
+ * to their type (segment, form, mail, etc.)
+ * 
+ * @param {object} modalContent HTML element
+ * @param {string} idModal Modal id
+ */
+function optionsSegment(modalContent, idModal) {
     const wrapperDiv = document.createElement('div');
     wrapperDiv.classList.add('content-wrapper');
 
@@ -90,13 +108,23 @@ function optionsSegment(modalContent) {
         
         if (i === 2) {
             const select = document.createElement('select');
+            select.classList.add('border-2');
+            // select.id = 'select-segment';
             const option1 = document.createElement('option');
             const option2 = document.createElement('option');
-            option1.textContent = 'Option 1';
-            option2.textContent = 'Option 2';
-            select.classList.add('border-2')
+            const option3 = document.createElement('option');
+            option1.textContent = 'Select segment...';
+            option2.textContent = 'People that birthday = date(today)';
+            option3.textContent = 'People thats last buy is > date(two months ago)';
+            select.addEventListener("change", (event) => {
+                const figure = app.canvas.getFigure(idModal);
+                if (figure) {
+                    figure.setText("Segment: " + event.target.value);
+                }
+            });
             select.appendChild(option1);
             select.appendChild(option2);
+            select.appendChild(option3);
             div.appendChild(select);
         }
 
@@ -129,6 +157,8 @@ function optionsSegment(modalContent) {
 
 }
 
+let selectedOption = "";
+
 var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
     
     // Override the createShapeElement() method to create a custom HTML element
@@ -150,7 +180,7 @@ var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
     },
 
     onContextMenu: function(x, y) {
-        console.log(this);
+        // console.log(this);
         clickRight(x, y, this);
     },
     
@@ -161,9 +191,20 @@ var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
     onClick: function (emitter, event) {
         let xPos = this.x + this.width + 20;
         let yPos = this.y;
-        // console.log(this.id);
-
         showOptions(xPos, yPos, this.id, this.userData[1]);
+    },
+
+    setText: function(text) {
+        if (this.textFigure) {
+            this.remove(this.textFigure);
+        }
+        this.textFigure = new draw2d.shape.basic.Label({
+            text: text,
+            color: "#000000",
+            fontColor: "#000000",
+            stroke: 0
+        });
+        this.add(this.textFigure, new draw2d.layout.locator.CenterLocator(this));
     }
 
 });
