@@ -69,6 +69,9 @@ function showOptions(x, y, id, action) {
             case "segment":
                 optionsSegment(modalContent, id);
                 break;
+            case "email":
+                optionsEmail(modalContent, id);
+                break;
         
             default:
                 break;
@@ -89,7 +92,7 @@ function showOptions(x, y, id, action) {
 
 /**
  * Create and display options inside the modal according 
- * to their type (segment, form, mail, etc.)
+ * to the type `segment`
  * 
  * @param {object} modalContent HTML element
  * @param {string} idModal Modal id
@@ -157,6 +160,67 @@ function optionsSegment(modalContent, idModal) {
 
 }
 
+/**
+ * Create and display options inside the modal according 
+ * to the type `email`
+ * 
+ * @param {object} modalContent HTML element
+ * @param {string} idModal Modal id
+ */
+function optionsEmail(modalContent, idModal) {
+    const wrapperDiv = document.createElement('div');
+    wrapperDiv.classList.add('content-wrapper');
+
+    for (let i = 1; i <= 4; i++) {
+        const div = document.createElement('div');
+        div.classList.add(`div${i}`);
+
+        if (i === 1) {
+            div.textContent = 'Select Email:';
+        }        
+        
+        if (i === 2) {
+            const select = document.createElement('select');
+            select.classList.add('border-2');
+            // select.id = 'select-segment';
+            const option1 = document.createElement('option');
+            const option2 = document.createElement('option');
+            const option3 = document.createElement('option');
+            option1.textContent = 'Select email...';
+            option2.textContent = 'Email A';
+            option3.textContent = 'Email List N';
+            select.addEventListener("change", (event) => {
+                const figure = app.canvas.getFigure(idModal);
+                if (figure) {
+                    figure.setText("Send Email: " + event.target.value);
+                }
+            });
+            select.appendChild(option1);
+            select.appendChild(option2);
+            select.appendChild(option3);
+            div.appendChild(select);
+        }
+
+        if (i === 3) {
+            const button = document.createElement('button');
+            button.textContent = 'New Email';
+            button.classList.add('btn-action');
+            div.appendChild(button);
+        }
+
+        if (i === 4) {
+            const button = document.createElement('button');
+            button.textContent = 'Save';
+            button.classList.add('btn-save');
+            div.appendChild(button);
+        }
+        
+        wrapperDiv.appendChild(div);
+    }
+
+    modalContent.appendChild(wrapperDiv);
+}
+
 let selectedOption = "";
 
 var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
@@ -175,6 +239,8 @@ var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
             x: 5,
             y: 3,
         }));
+
+        this.selectable = false;
         
         return shape;
     },
@@ -184,9 +250,9 @@ var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
         clickRight(x, y, this);
     },
     
-    onDoubleClick: function() {
-        setLabel(this);
-    },
+    // onDoubleClick: function() {
+    //     setLabel(this);
+    // },
 
     onClick: function (emitter, event) {
         let xPos = this.x + this.width + 20;
