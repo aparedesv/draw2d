@@ -130,6 +130,11 @@ function setLabel(item) {
  * @param {string} action action type (segment, email, etc.)
  */
 function showOptions(id, action) {
+
+    if (action == "end") {
+        return;
+    }
+
     if(document.querySelector("div#" + CSS.escape(id)) !== null) {        
         document.querySelector("div#" + CSS.escape(id)).style.setProperty("display", "block");
     } else {
