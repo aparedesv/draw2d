@@ -247,6 +247,7 @@ var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
 
     onContextMenu: function(x, y) {
         // console.log(this);
+        
         clickRight(x, y, this);
     },
     
