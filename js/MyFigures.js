@@ -15,14 +15,22 @@ var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
             y: 3,
         }));
 
+        if (this.userData[1] == "end") {
+            this.textFigure = new draw2d.shape.basic.Label({
+                text: "End",
+                color: "#000000",
+                fontColor: "#000000",
+                stroke: 0
+            });
+            this.add(this.textFigure, new draw2d.layout.locator.CenterLocator(this));
+        }
+
         this.selectable = false;
         
         return shape;
     },
 
     onContextMenu: function(x, y) {
-        // console.log(this);
-        
         clickRight(x, y, this);
     },
     
@@ -30,7 +38,7 @@ var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
     //     setLabel(this);
     // },
 
-    onClick: function (emitter, event) {
+    onClick: function (emitter, event) {        
         let xPos = this.x + this.width + 20;
         let yPos = this.y;
         showOptions(xPos, yPos, this.id, this.userData[1]);
