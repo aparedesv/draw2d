@@ -39,9 +39,7 @@ var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
     // },
 
     onClick: function (emitter, event) {        
-        let xPos = this.x + this.width + 20;
-        let yPos = this.y;
-        showOptions(xPos, yPos, this.id, this.userData[1]);
+        showOptions(this.id, this.userData[1]);
     },
 
     setText: function(text) {
@@ -131,18 +129,15 @@ function setLabel(item) {
  * @param {string} id id element
  * @param {string} action action type (segment, email, etc.)
  */
-function showOptions(x, y, id, action) {
+function showOptions(id, action) {
     if(document.querySelector("div#" + CSS.escape(id)) !== null) {        
-        document.getElementById(id).style.display = "block";
+        document.querySelector("div#" + CSS.escape(id)).style.setProperty("display", "block");
     } else {
         let workspace = document.getElementById("workspace");
         let modal = document.createElement('div');
-        modal.id = id;
-        modal.style.display = "block";
-        modal.style.left = 50 + "%";
-        modal.style.top = 50 + "%";
-        modal.style.transform = "translate(-50%, -50%)";
         modal.classList.add('modal');
+        modal.id = id;
+        modal.style.setProperty("display", "block");
         let modalContent = document.createElement('div');
         modalContent.classList.add('modal-content');
         let close = document.createElement('span');
@@ -166,15 +161,15 @@ function showOptions(x, y, id, action) {
         }
     
         close.onclick = function() {
-            modal.style.display = "none";
+            modal.style.setProperty("display", "none");
         }
     
         // When the user clicks anywhere outside of the modal, close it
-        // window.onclick = function(event) {
-        //   if (event.target == modal) {
-        //     modal.style.display = "none";
-        //   }
-        // }
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        }
     }
 }
 
