@@ -60,6 +60,8 @@ var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
 var outputLocator = new draw2d.layout.locator.TopLocator;
 var inputLocator = new draw2d.layout.locator.BottomLocator;
 
+var optionSelect = "";
+
 var MyConnection = draw2d.Connection.extend({
     init: function(attr, setter, getter) {
         this._super(attr, setter, getter);
@@ -119,6 +121,33 @@ function setLabel(item) {
     item.label = new draw2d.shape.basic.Label({text:"etiqueta", color:"#0d0d0d", fontColor:"#0d0d0d"});
     item.add(item.label, new draw2d.layout.locator.CenterLocator(item));
     item.label.installEditor(new draw2d.ui.LabelInplaceEditor());
+}
+
+/**
+ * Sets text to Figure
+ * 
+ * @param {string} idModal id Modal
+ * @param {string} optionSelect option selected 
+ */
+function setTextToFigure(idModal, optionSelect) {
+    let figure = app.canvas.getFigure(idModal);
+    if (figure) {
+        if (optionSelect === "Select segment..." || optionSelect === "Segment: Select segment...") {
+            figure.setText("");
+        } else {
+            figure.setText(optionSelect);
+        }
+    }
+    document.querySelector("div#" + CSS.escape(idModal)).style.display = "none";
+}
+
+/**
+ * Saves option selected by user
+ * 
+ * @param {string} option option selected
+ */
+function saveOptionSelected(option) {    
+    optionSelect = "Segment: " + option;
 }
 
 /**
@@ -185,7 +214,7 @@ function showOptions(id, action) {
  * @param {object} modalContent HTML element
  * @param {string} idModal Modal id
  */
-function optionsSegment(modalContent, idModal) {
+function optionsSegment(modalContent, idModal) {    
     const wrapperDiv = document.createElement('div');
     wrapperDiv.classList.add('content-wrapper');
 
@@ -207,10 +236,7 @@ function optionsSegment(modalContent, idModal) {
             option2.textContent = 'People that birthday = date(today)';
             option3.textContent = 'People thats last buy is > date(two months ago)';
             select.addEventListener("change", (event) => {
-                const figure = app.canvas.getFigure(idModal);
-                if (figure) {
-                    figure.setText("Segment: " + event.target.value);
-                }
+                saveOptionSelected(event.target.value);
             });
             select.appendChild(option1);
             select.appendChild(option2);
@@ -237,6 +263,9 @@ function optionsSegment(modalContent, idModal) {
             const button = document.createElement('button');
             button.textContent = 'Save';
             button.classList.add('btn-save');
+            button.addEventListener("click", (event) => {
+                setTextToFigure(idModal, optionSelect);
+            });
             div.appendChild(button);
         }
         

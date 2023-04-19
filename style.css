@@ -109,13 +109,15 @@ aside button {
 }
 
 .modal-content {
+    display: grid;
     position: relative;
     background-color: var(--color-blanc-sherpa);
     margin: 10% auto 0;
     padding: 15px 30px 15px 15px;
     border: 1px solid var(--color-verd-sherpa);
     border-radius: 30px;
-    width: 225px;
+    max-width: 450px;
+    min-height: 300px;
 }
 
 .modal-content p {
@@ -140,15 +142,11 @@ aside button {
 .content-wrapper {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 8px;
+    gap: 1rem 1rem;
 }
 
 .content-wrapper select {
-    /* appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none; */
     background-color: transparent;
-    /* border: 2px solid #000; */
     font-family: inherit;
     width: 100%;
 }
@@ -173,6 +171,11 @@ aside button {
 
 .content-wrapper .btn-save {
     background-color: var(--color-verd-sherpa-btn);
+}
+
+.content-wrapper > :nth-last-child(2),
+.content-wrapper > :nth-last-child(1) {
+    align-self: end;
 }
 
 /* MODAL < */
