@@ -4,13 +4,13 @@ var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
     createShapeElement: function() {
         var shape = this._super();
         
-        this.icon = new draw2d.shape.basic.Image({
+        shape.icon = new draw2d.shape.basic.Image({
             path: "./assets/icons/" + this.userData[0],
             width: 35,
             height: 35,
         });
         
-        this.add(this.icon, new draw2d.layout.locator.XYAbsPortLocator({
+        this.add(shape.icon, new draw2d.layout.locator.XYAbsPortLocator({
             x: 5,
             y: 3,
         }));
@@ -21,7 +21,7 @@ var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
                 color: "#000000",
                 fontColor: "#000000",
                 stroke: 0
-            });
+            });            
             this.add(this.textFigure, new draw2d.layout.locator.CenterLocator(this));
         }
 
@@ -50,8 +50,9 @@ var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
             text: text,
             color: "#000000",
             fontColor: "#000000",
-            stroke: 0
+            stroke: 0,
         });
+        this.textFigure.setWidth(20);
         this.add(this.textFigure, new draw2d.layout.locator.CenterLocator(this));
     }
 

@@ -30,10 +30,10 @@
             <div class="action-wrapper">
                 <h3 class="title">sending</h3>
                 <div class="icons-wrapper">
-                    <menu-figure ruta="mail_FILL0_wght400_GRAD0_opsz48 - c�pia.svg" template='<svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M7 40q-1.2 0-2.1-.9Q4 38.2 4 37V11q0-1.2.9-2.1Q5.8 8 7 8h34q1.2 0 2.1.9.9.9.9 2.1v26q0 1.2-.9 2.1-.9.9-2.1.9Zm17-15.1L7 13.75V37h34V13.75Zm0-3L40.8 11H7.25ZM7 13.75V11v26Z"/></svg>' title="Email" figure="email"></menu-figure>                            
+                    <menu-figure ruta="mail_FILL0_wght400_GRAD0_opsz48.svg" template='<svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M7 40q-1.2 0-2.1-.9Q4 38.2 4 37V11q0-1.2.9-2.1Q5.8 8 7 8h34q1.2 0 2.1.9.9.9.9 2.1v26q0 1.2-.9 2.1-.9.9-2.1.9Zm17-15.1L7 13.75V37h34V13.75Zm0-3L40.8 11H7.25ZM7 13.75V11v26Z"/></svg>' title="Email" figure="email"></menu-figure>                            
                     <menu-figure ruta="send_to_mobile_FILL0_wght400_GRAD0_opsz48.svg" template='<svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="m34.3 31.6-2.1-2.1 4.1-4.05H24v-3h12.3l-4.1-4.05 2.1-2.1 7.65 7.65ZM13 46q-1.25 0-2.125-.875T10 43V5q0-1.25.875-2.125T13 2h22q1.25 0 2.125.875T38 5v7.3h-3V9.5H13v29h22v-2.8h3V43q0 1.25-.875 2.125T35 46Zm0-4.5V43h22v-1.5Zm0-35h22V5H13Zm0 0V5v1.5Zm0 35V43Z"/></svg>' title="Notificaction" figure="notificaction"></menu-figure>
                     <menu-figure ruta="sms_FILL0_wght400_GRAD0_opsz48.svg" template='<svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M15.3 21.85q.85 0 1.425-.575.575-.575.575-1.425 0-.85-.575-1.425-.575-.575-1.425-.575-.85 0-1.425.575Q13.3 19 13.3 19.85q0 .85.575 1.425.575.575 1.425.575Zm8.85 0q.85 0 1.425-.575.575-.575.575-1.425 0-.85-.575-1.425-.575-.575-1.425-.575-.85 0-1.425.575-.575.575-.575 1.425 0 .85.575 1.425.575.575 1.425.575Zm8.5 0q.85 0 1.425-.575.575-.575.575-1.425 0-.85-.575-1.425-.575-.575-1.425-.575-.85 0-1.425.575-.575.575-.575 1.425 0 .85.575 1.425.575.575 1.425.575ZM4 44V7q0-1.15.9-2.075Q5.8 4 7 4h34q1.15 0 2.075.925Q44 5.85 44 7v26q0 1.15-.925 2.075Q42.15 36 41 36H12Zm3-7.25L10.75 33H41V7H7ZM7 7v29.75Z"/></svg>' title="SMS" figure="sms"></menu-figure>
-                    <menu-figure ruta="campaign_FILL0_wght400_GRAD0_opsz48 - c�pia.svg" template='<svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M36.5 25.5v-3H44v3ZM39 40l-6.05-4.5 1.8-2.4 6.05 4.5Zm-4.1-25.15-1.8-2.4L39 8l1.8 2.4ZM10.5 38v-8H7q-1.25 0-2.125-.875T4 27v-6q0-1.25.875-2.125T7 18h9l10-6v24l-10-6h-2.5v8ZM15 24Zm13 6.7V17.3q1.35 1.2 2.175 2.925Q31 21.95 31 24t-.825 3.775Q29.35 29.5 28 30.7ZM7 21v6h9.8l6.2 3.7V17.3L16.8 21Z"/></svg>' title="Campaign" figure="campaign"></menu-figure>
+                    <menu-figure ruta="campaign_FILL0_wght400_GRAD0_opsz48.svg" template='<svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M36.5 25.5v-3H44v3ZM39 40l-6.05-4.5 1.8-2.4 6.05 4.5Zm-4.1-25.15-1.8-2.4L39 8l1.8 2.4ZM10.5 38v-8H7q-1.25 0-2.125-.875T4 27v-6q0-1.25.875-2.125T7 18h9l10-6v24l-10-6h-2.5v8ZM15 24Zm13 6.7V17.3q1.35 1.2 2.175 2.925Q31 21.95 31 24t-.825 3.775Q29.35 29.5 28 30.7ZM7 21v6h9.8l6.2 3.7V17.3L16.8 21Z"/></svg>' title="Campaign" figure="campaign"></menu-figure>
                 </div>
             </div>
             <div class="action-wrapper">
@@ -126,19 +126,30 @@
                 clearCanvas() {
                     this.canvas.clear();
                 },
-                save() {                    
+                save() {
                     let writer = new draw2d.io.json.Writer();
                     writer.marshal(this.canvas, function (json) {
                         var jsonTxt = JSON.stringify(json, null, 2);
                         window.localStorage.setItem('draw_saved', jsonTxt);
-                        // console.log(jsonTxt);
                     });
                 },
-                load() {
-                    let jsonDraw = window.localStorage.getItem('draw_saved');                    
+                load() {                    
                     this.canvas.clear();
+                    let jsonDraw = window.localStorage.getItem('draw_saved');
                     let reader = new draw2d.io.json.Reader();
                     reader.unmarshal(this.canvas, jsonDraw);
+                    let jsonDrawArr = JSON.parse(jsonDraw);
+                    let figures = this.canvas.getFigures().clone();
+                    figures.each((i, f) => {
+                        f.icon = new draw2d.shape.basic.Image({
+                            path: "./assets/icons/" + jsonDrawArr[i].userData[0],
+                            width: 35,
+                            height: 35,
+                            x: f.getX() + 10,
+                            y: f.getY() + 8,
+                        });
+                        f.add(f.icon, new draw2d.layout.locator.XYAbsPortLocator());                        
+                    });
                 }
             },
             mounted() {
@@ -147,7 +158,6 @@
         });
         
     </script>
-
 </body>
 
 </html>
