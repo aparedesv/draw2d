@@ -21,7 +21,8 @@ var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
                 color: "#000000",
                 fontColor: "#000000",
                 stroke: 0
-            });            
+            });
+            this.userData.push("End");
             this.add(this.textFigure, new draw2d.layout.locator.CenterLocator(this));
         }
 
@@ -53,6 +54,7 @@ var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
             stroke: 0,
         });
         this.textFigure.setWidth(20);
+        this.userData.push(text);
         this.add(this.textFigure, new draw2d.layout.locator.CenterLocator(this));
     }
 
