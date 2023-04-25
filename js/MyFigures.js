@@ -135,10 +135,19 @@ function setLabel(item) {
 function setTextToFigure(idModal, optionSelect) {
     let figure = app.canvas.getFigure(idModal);
     if (figure) {
-        if (optionSelect === "Select segment..." || optionSelect === "Segment: Select segment...") {
-            figure.setText("");
-        } else {
-            figure.setText(optionSelect);
+        if (figure.userData[1] == "segment") {
+            if (optionSelect === "Select segment..." || optionSelect === "Segment: Select segment...") {
+                figure.setText("");
+            } else {
+                figure.setText(optionSelect);
+            }
+        }
+        if (figure.userData[1] == "email") {
+            if (optionSelect === "Select email..." || optionSelect === "Email: Select email...") {
+                figure.setText("");
+            } else {
+                figure.setText(optionSelect);
+            }
         }
     }
     document.querySelector("div#" + CSS.escape(idModal)).style.display = "none";
@@ -149,8 +158,14 @@ function setTextToFigure(idModal, optionSelect) {
  * 
  * @param {string} option option selected
  */
-function saveOptionSelected(option) {    
-    optionSelect = "Segment: " + option;
+function saveOptionSelected(idModal, option) {
+    let figure = app.canvas.getFigure(idModal);
+    if (figure.userData[1] == "segment") {
+        optionSelect = "Segment: " + option;
+    }
+    if (figure.userData[1] == "email") {
+        optionSelect = "Email: " + option;
+    }
 }
 
 /**
@@ -239,7 +254,7 @@ function optionsSegment(modalContent, idModal) {
             option2.textContent = 'People that birthday = date(today)';
             option3.textContent = 'People thats last buy is > date(two months ago)';
             select.addEventListener("change", (event) => {
-                saveOptionSelected(event.target.value);
+                saveOptionSelected(idModal, event.target.value);
             });
             select.appendChild(option1);
             select.appendChild(option2);
@@ -308,10 +323,7 @@ function optionsEmail(modalContent, idModal) {
             option2.textContent = 'Email A';
             option3.textContent = 'Email List N';
             select.addEventListener("change", (event) => {
-                const figure = app.canvas.getFigure(idModal);
-                if (figure) {
-                    figure.setText("Send Email: " + event.target.value);
-                }
+                saveOptionSelected(idModal, event.target.value);
             });
             select.appendChild(option1);
             select.appendChild(option2);
@@ -330,6 +342,9 @@ function optionsEmail(modalContent, idModal) {
             const button = document.createElement('button');
             button.textContent = 'Save';
             button.classList.add('btn-save');
+            button.addEventListener("click", (event) => {
+                setTextToFigure(idModal, optionSelect);
+            });
             div.appendChild(button);
         }
         
