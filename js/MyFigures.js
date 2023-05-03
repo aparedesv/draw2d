@@ -5,9 +5,15 @@ var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
         var shape = this._super();
         
         shape.icon = new draw2d.shape.basic.Image({
+            id: this.id,
             path: "./assets/icons/" + this.userData[0],
             width: 35,
             height: 35,
+        });
+
+        let figType = this.userData[1];
+        shape.icon.on("click", function() {
+            showOptions(shape.icon.id, figType);
         });
         
         this.add(shape.icon, new draw2d.layout.locator.XYAbsPortLocator({
