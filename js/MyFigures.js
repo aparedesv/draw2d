@@ -1,8 +1,13 @@
+var dadesUsuari = [];
+
 var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
     
     // Override the createShapeElement() method to create a custom HTML element
     createShapeElement: function() {
         var shape = this._super();
+
+        dadesUsuari['ruta'] = this.userData[0];
+        dadesUsuari['figure'] = this.userData[1];
         
         shape.icon = new draw2d.shape.basic.Image({
             id: this.id,
@@ -58,6 +63,9 @@ var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
             color: "#000000",
             fontColor: "#000000",
             stroke: 0,
+        });
+        this.textFigure.on("click", function() {
+            showOptions(dadesUsuari['id-fig'], dadesUsuari['figure']);
         });
         this.textFigure.setWidth(20);
         this.userData.push(text);
@@ -183,6 +191,7 @@ function saveOptionSelected(idModal, option) {
  * @param {string} action action type (segment, email, etc.)
  */
 function showOptions(id, action) {
+    dadesUsuari['id-fig'] = id;    
 
     if (action == "end") {
         return;
