@@ -101,8 +101,11 @@ aside button, .btns-modal button {
 
 /* MODAL > */
 
+.hide {
+    display: none;
+}
+
 .modal {
-    display: none; /* Hidden by default */
     position: absolute; /* Stay in place */
     z-index: 1; /* Sit on top */
     left: 50%;

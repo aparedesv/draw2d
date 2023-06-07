@@ -79,28 +79,30 @@ var inputLocator = new draw2d.layout.locator.BottomLocator;
 
 var optionSelect = "";
 
-var MyConnection = draw2d.Connection.extend({
-    init: function(attr, setter, getter) {
-        this._super(attr, setter, getter);
-    
-        // Create a default arrow shape
-        var arrow = new draw2d.shape.basic.Polygon({
-            vertices: [
-                {x: 0, y: 0},
-                {x: -10, y: 10},
-                {x: -10, y: -10}
-            ],
-            stroke: 2,
-            color: "#000000",
-            bgColor: "#ffffff"
-        });
-    
-        // Add the arrow shape to the end of the connection
-        var locator = new draw2d.layout.locator.ManhattanMidpointLocator(this);
-        arrow.setPosition(locator.getX(), locator.getY());
-        this.add(arrow, locator);
-    }
-});
+/*
+    var MyConnection = draw2d.Connection.extend({
+        init: function(attr, setter, getter) {
+            this._super(attr, setter, getter);
+        
+            // Create a default arrow shape
+            var arrow = new draw2d.shape.basic.Polygon({
+                vertices: [
+                    {x: 0, y: 0},
+                    {x: -10, y: 10},
+                    {x: -10, y: -10}
+                ],
+                stroke: 2,
+                color: "#000000",
+                bgColor: "#ffffff"
+            });
+        
+            // Add the arrow shape to the end of the connection
+            var locator = new draw2d.layout.locator.ManhattanMidpointLocator(this);
+            arrow.setPosition(locator.getX(), locator.getY());
+            this.add(arrow, locator);
+        }
+    });
+*/
 
 function clickRight(x, y, item) {
     var shape = item.shape[0];
@@ -244,11 +246,116 @@ function showOptions(id, action) {
 }
 
 /**
+ * Toggle action buttons sidebar menu disable/enable
+ */
+function disableEnableButtonsMenu() {
+    buttons = document.querySelectorAll('.action-wrapper button');
+    buttons.forEach(element => {
+        element.toggleAttribute("disabled");
+    });
+}
+
+/**
+ * Add event and close modal
+ * 
+ * @param {HTMLElement} modalEl
+ */
+function closeBtn(modalEl) {
+    let closeButton = document.querySelector('span.close');
+    // console.log(modalEl, closeButton);
+    const listener = function(event) {
+        console.log(event);
+        modalEl.classList.toggle('hide');
+        disableEnableButtonsMenu();
+        closeButton.removeEventListener("click", listener);
+    };
+    closeButton.addEventListener("click", listener);
+}
+
+/**
+ * Display or hide modal
+ * 
+ * @param {HTMLElement} modalEl 
+ * @param {string} message
+ */
+function modalSave(modalEl, message) {
+    disableEnableButtonsMenu();
+    modalEl.classList.toggle('hide');
+    modalEl.querySelector('p').textContent = message;
+    closeBtn(modalEl);
+}
+
+/**
+ * Confirm clear canvas
+ * 
+ * @param {HTMLElement} modalEl 
+ */
+function clearConfirm(modalEl) {
+    disableEnableButtonsMenu();
+    modalEl.classList.toggle('hide');
+    closeBtn(modalEl);
+
+    let btnsBool = document.querySelectorAll('#clear-modal button');
+    btnsBool.forEach(function(btn) {
+        const listener = function(event) {
+            if (btn.dataset.bool == "true") {
+                app.canvas.clear();
+            }
+            modalEl.classList.toggle('hide');
+            disableEnableButtonsMenu();
+            btn.removeEventListener("click", listener);
+        }
+        btn.addEventListener("click", listener);
+    });
+
+
+    // yes.onclick = function () {
+    //     confirmModal.style.setProperty("display", "none");
+    //     disableEnableButtonsMenu();
+    //     app.canvas.clear();
+    // }
+    // no.onclick = function () {
+    //     confirmModal.style.setProperty("display", "none");
+    //     disableEnableButtonsMenu();
+    //     return false;
+    // }
+
+
+    // if (document.getElementById("confirm-modal") == null) {
+    //     let confirmModal = createHtmlModal("confirm-modal", "Are you sure you want to clear the data and lose your campaign?");
+    //     let btnWrapper = document.createElement("div");
+    //     btnWrapper.classList.add("btns-modal");
+    //     let no = document.createElement('button');
+    //     let yes = document.createElement('button');
+    //     no.textContent = "NO";
+    //     yes.textContent = "YES";
+    //     btnWrapper.appendChild(no);
+    //     btnWrapper.appendChild(yes);
+    //     confirmModal.childNodes[0].appendChild(btnWrapper);
+    //     yes.onclick = function () {
+    //         confirmModal.style.setProperty("display", "none");
+    //         disableEnableButtonsMenu();
+    //         app.canvas.clear();
+    //     }
+    //     no.onclick = function () {
+    //         confirmModal.style.setProperty("display", "none");
+    //         disableEnableButtonsMenu();
+    //         return false;
+    //     }
+    // } else {
+    //     document.getElementById("confirm-modal").style.setProperty("display", "block");
+    //     disableEnableButtonsMenu();
+    // }
+}
+
+/**
  * Basic messages modal display and interactions
  * 
- * @param {*} id 
+ * @param {string} id 
+ * @param {string} message 
  */
 function createHtmlModal(id = null, message) {
+    disableEnableButtonsMenu();
     let workspace = document.getElementById("workspace");    
     if (document.getElementById(id) == null) {
         let modalBasic = document.createElement('div');
@@ -272,49 +379,13 @@ function createHtmlModal(id = null, message) {
         }
         return modalBasic;
     } else {
-        document.getElementById(id).style.setProperty("display", "block");
+        if (message != "There's nothing to save...") {
+            let modalBasic = document.getElementById(id);
+            modalBasic.style.setProperty("display", "block");
+            document.querySelector('.modal-content').textContent = message;
+        }
+        disableEnableButtonsMenu();
         return document.getElementById(id);
-    }
-}
-
-/**
- * Toggle action buttons sidebar menu disable/enable
- */
-function disableEnableButtonsMenu() {
-    buttons = document.querySelectorAll('.action-wrapper button');
-    buttons.forEach(element => {
-        element.toggleAttribute("disabled");
-    });
-}
-
-/**
- * Confirm clear canvas
- */
-function clearConfirm() {
-    disableEnableButtonsMenu();
-    if (document.getElementById("confirm-modal") == null) {
-        let confirmModal = createHtmlModal("confirm-modal", "Are you sure you want to clear the data and lose your campaign?");
-        let btnWrapper = document.createElement("div");
-        btnWrapper.classList.add("btns-modal");
-        let no = document.createElement('button');
-        let yes = document.createElement('button');
-        no.textContent = "NO";
-        yes.textContent = "YES";
-        btnWrapper.appendChild(no);
-        btnWrapper.appendChild(yes);
-        confirmModal.childNodes[0].appendChild(btnWrapper);
-        yes.onclick = function() { 
-            confirmModal.style.setProperty("display", "none");
-            disableEnableButtonsMenu();
-            app.canvas.clear();
-        }
-        no.onclick = function() { 
-            confirmModal.style.setProperty("display", "none");
-            disableEnableButtonsMenu();
-            return false; 
-        }
-    } else {
-        document.getElementById("confirm-modal").style.setProperty("display", "block");
     }
 }
 
