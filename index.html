@@ -124,7 +124,11 @@
                     this.canvas = canvas;
                 },
                 clearCanvas() {
-                    this.canvas.clear();
+                    clearConfirm();
+                    // if (clearConfirm()) {
+                    //     console.log(clearConfirm());
+                    //     this.canvas.clear();
+                    // }
                 },
                 save() {
                     let writer = new draw2d.io.json.Writer();
@@ -132,6 +136,7 @@
                         var jsonTxt = JSON.stringify(json, null, 2);
                         window.localStorage.setItem('draw_saved', jsonTxt);
                     });
+                    createHtmlModal("save-modal", "Your automation campaign has been saved!");
                 },
                 load() {
                     if (window.localStorage.getItem('draw_saved') != null) {                        

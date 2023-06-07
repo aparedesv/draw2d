@@ -75,7 +75,13 @@ main {
     margin-top: auto;
 }
 
-aside button {
+.btns-modal {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-around;
+}
+
+aside button, .btns-modal button {
     width: 90px;
     height: 40px;
     letter-spacing: 2px;
@@ -117,6 +123,9 @@ aside button {
     border: 1px solid var(--color-verd-sherpa);
     border-radius: 30px;
     max-width: 450px;
+}
+
+.content-wrapper {
     min-height: 300px;
 }
 

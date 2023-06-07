@@ -200,6 +200,7 @@ function showOptions(id, action) {
     if(document.querySelector("div#" + CSS.escape(id)) !== null) {        
         document.querySelector("div#" + CSS.escape(id)).style.setProperty("display", "block");
     } else {
+        disableEnableButtonsMenu();
         let workspace = document.getElementById("workspace");
         let modal = document.createElement('div');
         modal.classList.add('modal');
@@ -229,14 +230,91 @@ function showOptions(id, action) {
     
         close.onclick = function() {
             modal.style.setProperty("display", "none");
+            disableEnableButtonsMenu();
         }
     
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
           if (event.target == modal) {
             modal.style.display = "none";
+            disableEnableButtonsMenu();
           }
         }
+    }
+}
+
+/**
+ * Basic messages modal display and interactions
+ * 
+ * @param {*} id 
+ */
+function createHtmlModal(id = null, message) {
+    let workspace = document.getElementById("workspace");    
+    if (document.getElementById(id) == null) {
+        let modalBasic = document.createElement('div');
+        modalBasic.classList.add('modal');
+        modalBasic.id = id;
+        modalBasic.style.setProperty("display", "block");
+        let modalBasicContent = document.createElement('div');
+        modalBasicContent.classList.add('modal-content');
+        modalBasicContent.textContent = message;
+        let closeBasic = document.createElement('span');
+        closeBasic.classList.add('close');
+        closeBasic.innerHTML = '&times';
+    
+        modalBasicContent.appendChild(closeBasic);
+        modalBasic.appendChild(modalBasicContent);
+        workspace.appendChild(modalBasic);
+    
+        closeBasic.onclick = function () {
+            modalBasic.style.setProperty("display", "none");
+            disableEnableButtonsMenu();
+        }
+        return modalBasic;
+    } else {
+        document.getElementById(id).style.setProperty("display", "block");
+        return document.getElementById(id);
+    }
+}
+
+/**
+ * Toggle action buttons sidebar menu disable/enable
+ */
+function disableEnableButtonsMenu() {
+    buttons = document.querySelectorAll('.action-wrapper button');
+    buttons.forEach(element => {
+        element.toggleAttribute("disabled");
+    });
+}
+
+/**
+ * Confirm clear canvas
+ */
+function clearConfirm() {
+    disableEnableButtonsMenu();
+    if (document.getElementById("confirm-modal") == null) {
+        let confirmModal = createHtmlModal("confirm-modal", "Are you sure you want to clear the data and lose your campaign?");
+        let btnWrapper = document.createElement("div");
+        btnWrapper.classList.add("btns-modal");
+        let no = document.createElement('button');
+        let yes = document.createElement('button');
+        no.textContent = "NO";
+        yes.textContent = "YES";
+        btnWrapper.appendChild(no);
+        btnWrapper.appendChild(yes);
+        confirmModal.childNodes[0].appendChild(btnWrapper);
+        yes.onclick = function() { 
+            confirmModal.style.setProperty("display", "none");
+            disableEnableButtonsMenu();
+            app.canvas.clear();
+        }
+        no.onclick = function() { 
+            confirmModal.style.setProperty("display", "none");
+            disableEnableButtonsMenu();
+            return false; 
+        }
+    } else {
+        document.getElementById("confirm-modal").style.setProperty("display", "block");
     }
 }
 
