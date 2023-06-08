@@ -50,7 +50,7 @@ var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
     //     setLabel(this);
     // },
 
-    onClick: function (emitter, event) {        
+    onClick: function (emitter, event) { 
         showOptions(this.id, this.userData[1]);
     },
 
@@ -78,6 +78,28 @@ var outputLocator = new draw2d.layout.locator.TopLocator;
 var inputLocator = new draw2d.layout.locator.BottomLocator;
 
 var optionSelect = "";
+
+/**
+ * Set text on figure options action
+ */
+function setTextFigureLoaded(figure) {
+    console.log(figure.userData[0], figure.userData[1], figure.userData[2]);
+    // if (figure.textFigure) {
+    //     figure.remove(figure.textFigure);
+    // }
+    figure.textFigure = new draw2d.shape.basic.Label({
+        text: figure.userData[2],
+        color: "#000000",
+        fontColor: "#000000",
+        stroke: 0,
+    });
+    figure.textFigure.on("click", function() {
+        showOptions(figure.id, figure.userData[1]);
+    });
+    figure.textFigure.setWidth(20);
+    // figure.userData.push(text);
+    figure.add(figure.textFigure, new draw2d.layout.locator.CenterLocator(this));
+}
 
 /*
     var MyConnection = draw2d.Connection.extend({
@@ -193,6 +215,7 @@ function saveOptionSelected(idModal, option) {
  * @param {string} action action type (segment, email, etc.)
  */
 function showOptions(id, action) {
+    disableEnableButtonsMenu();
     dadesUsuari['id-fig'] = id;    
 
     if (action == "end") {
@@ -240,8 +263,7 @@ function showOptions(id, action) {
             modal.style.display = "none";
             disableEnableButtonsMenu();
           }
-        }
-        disableEnableButtonsMenu();
+        }        
     }
 }
 
@@ -312,7 +334,7 @@ function clearConfirm(modalEl) {
  * 
  * @param {string} id 
  * @param {string} message 
- */
+ 
 function createHtmlModal(id = null, message) {
     disableEnableButtonsMenu();
     let workspace = document.getElementById("workspace");    
@@ -347,6 +369,7 @@ function createHtmlModal(id = null, message) {
         return document.getElementById(id);
     }
 }
+*/
 
 /**
  * Create and display options inside the modal according 

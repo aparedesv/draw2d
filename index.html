@@ -164,14 +164,30 @@
                         let jsonDraw = window.localStorage.getItem('draw_saved');
                         let reader = new draw2d.io.json.Reader();
                         reader.unmarshal(this.canvas, jsonDraw);
+                        // console.log(jsonDraw);
                         let jsonDrawArr = JSON.parse(jsonDraw);
                         let figures = this.canvas.getFigures().clone();
                         figures.each((i, f) => {
+                            console.log(
+                                f.id,
+                                f.userData[0], 
+                                f.userData[1], 
+                                f.userData[2], 
+                            );
+                            f.onClick = function (emitter, event) {
+                                showOptions(this.id, f.userData[1]);
+                            };
+                            f.setText = function() { 
+                                setTextFigureLoaded(f); 
+                            }
                             f.textFigure = new draw2d.shape.basic.Label({
                                 text: jsonDrawArr[i].userData[2],
                                 color: "#000000",
                                 fontColor: "#000000",
                                 stroke: 0,
+                            });
+                            f.textFigure.on("click", function () {
+                                showOptions(f.id, f.userData[1]);
                             });
                             f.add(f.textFigure, new draw2d.layout.locator.CenterLocator(f));
                             f.icon = new draw2d.shape.basic.Image({
