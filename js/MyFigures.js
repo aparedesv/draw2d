@@ -262,9 +262,7 @@ function disableEnableButtonsMenu() {
  */
 function closeBtn(modalEl) {
     let closeButton = modalEl.querySelector('span.close');
-    // console.log(modalEl, closeButton);
     const listener = function(event) {
-        console.log(event);
         modalEl.classList.toggle('hide');
         disableEnableButtonsMenu();
         closeButton.removeEventListener("click", listener);
@@ -291,68 +289,22 @@ function modalSave(modalEl, message) {
  * @param {HTMLElement} modalEl 
  */
 function clearConfirm(modalEl) {
-    console.log(modalEl);
     disableEnableButtonsMenu();
-    modalEl.classList.toggle('hide');
     closeBtn(modalEl);
+    modalEl.classList.toggle('hide');
 
-    let btnsBool = document.querySelectorAll('#clear-modal button');
-    btnsBool.forEach(function(btn) {
-        const listener = function(event) {
-            if (btn.dataset.bool == "true") {
-                console.log(modalEl);
-                console.log('click YES');
-                app.canvas.clear();
-                // btn.removeEventListener("click", listener);
-            } else {
-                console.log('click NO');
-                console.log(modalEl);
-            }
-            modalEl.classList.toggle('hide');
-            disableEnableButtonsMenu();
-        }
-        // btn.removeEventListener("click", listener);
-        btn.addEventListener("click", listener);
-    });
+    let btnYes = document.getElementById('btn-yes');
+    let btnNo = document.getElementById('btn-no');
 
-
-    // yes.onclick = function () {
-    //     confirmModal.style.setProperty("display", "none");
-    //     disableEnableButtonsMenu();
-    //     app.canvas.clear();
-    // }
-    // no.onclick = function () {
-    //     confirmModal.style.setProperty("display", "none");
-    //     disableEnableButtonsMenu();
-    //     return false;
-    // }
-
-
-    // if (document.getElementById("confirm-modal") == null) {
-    //     let confirmModal = createHtmlModal("confirm-modal", "Are you sure you want to clear the data and lose your campaign?");
-    //     let btnWrapper = document.createElement("div");
-    //     btnWrapper.classList.add("btns-modal");
-    //     let no = document.createElement('button');
-    //     let yes = document.createElement('button');
-    //     no.textContent = "NO";
-    //     yes.textContent = "YES";
-    //     btnWrapper.appendChild(no);
-    //     btnWrapper.appendChild(yes);
-    //     confirmModal.childNodes[0].appendChild(btnWrapper);
-    //     yes.onclick = function () {
-    //         confirmModal.style.setProperty("display", "none");
-    //         disableEnableButtonsMenu();
-    //         app.canvas.clear();
-    //     }
-    //     no.onclick = function () {
-    //         confirmModal.style.setProperty("display", "none");
-    //         disableEnableButtonsMenu();
-    //         return false;
-    //     }
-    // } else {
-    //     document.getElementById("confirm-modal").style.setProperty("display", "block");
-    //     disableEnableButtonsMenu();
-    // }
+    btnYes.onclick = function () {
+        modalEl.classList.toggle('hide');
+        disableEnableButtonsMenu();
+        app.canvas.clear();
+    }
+    btnNo.onclick = function () {
+        modalEl.classList.toggle('hide');
+        disableEnableButtonsMenu();
+    }
 }
 
 /**
