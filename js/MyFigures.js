@@ -201,8 +201,7 @@ function showOptions(id, action) {
 
     if(document.querySelector("div#" + CSS.escape(id)) !== null) {        
         document.querySelector("div#" + CSS.escape(id)).style.setProperty("display", "block");
-    } else {
-        disableEnableButtonsMenu();
+    } else {        
         let workspace = document.getElementById("workspace");
         let modal = document.createElement('div');
         modal.classList.add('modal');
@@ -242,6 +241,7 @@ function showOptions(id, action) {
             disableEnableButtonsMenu();
           }
         }
+        disableEnableButtonsMenu();
     }
 }
 
@@ -261,7 +261,7 @@ function disableEnableButtonsMenu() {
  * @param {HTMLElement} modalEl
  */
 function closeBtn(modalEl) {
-    let closeButton = document.querySelector('span.close');
+    let closeButton = modalEl.querySelector('span.close');
     // console.log(modalEl, closeButton);
     const listener = function(event) {
         console.log(event);
@@ -291,6 +291,7 @@ function modalSave(modalEl, message) {
  * @param {HTMLElement} modalEl 
  */
 function clearConfirm(modalEl) {
+    console.log(modalEl);
     disableEnableButtonsMenu();
     modalEl.classList.toggle('hide');
     closeBtn(modalEl);
@@ -299,12 +300,18 @@ function clearConfirm(modalEl) {
     btnsBool.forEach(function(btn) {
         const listener = function(event) {
             if (btn.dataset.bool == "true") {
+                console.log(modalEl);
+                console.log('click YES');
                 app.canvas.clear();
+                // btn.removeEventListener("click", listener);
+            } else {
+                console.log('click NO');
+                console.log(modalEl);
             }
             modalEl.classList.toggle('hide');
             disableEnableButtonsMenu();
-            btn.removeEventListener("click", listener);
         }
+        // btn.removeEventListener("click", listener);
         btn.addEventListener("click", listener);
     });
 
