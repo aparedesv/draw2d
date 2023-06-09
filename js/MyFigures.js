@@ -8,6 +8,7 @@ var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
 
         dadesUsuari['ruta'] = this.userData[0];
         dadesUsuari['figure'] = this.userData[1];
+        dadesUsuari['text-label'] = this.userData[2];
         
         shape.icon = new draw2d.shape.basic.Image({
             id: this.id,
@@ -16,9 +17,8 @@ var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
             height: 35,
         });
 
-        let figType = this.userData[1];
         shape.icon.on("click", function() {
-            showOptions(shape.icon.id, figType);
+            showOptions(shape.icon.id, dadesUsuari['figure']);
         });
         
         this.add(shape.icon, new draw2d.layout.locator.XYAbsPortLocator({
@@ -26,7 +26,7 @@ var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
             y: 3,
         }));
 
-        if (this.userData[1] == "end") {
+        if (dadesUsuari['figure'] == "end") {
             this.textFigure = new draw2d.shape.basic.Label({
                 text: "End",
                 color: "#000000",
@@ -34,6 +34,16 @@ var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
                 stroke: 0
             });
             this.userData.push("End");
+            this.add(this.textFigure, new draw2d.layout.locator.CenterLocator(this));
+        }
+
+        if (dadesUsuari['text-label'] != null) {
+            this.textFigure = new draw2d.shape.basic.Label({
+                text: dadesUsuari['text-label'],
+                color: "#000000",
+                fontColor: "#000000",
+                stroke: 0
+            });
             this.add(this.textFigure, new draw2d.layout.locator.CenterLocator(this));
         }
 
@@ -51,10 +61,12 @@ var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
     // },
 
     onClick: function (emitter, event) { 
+        disableEnableButtonsMenu();
         showOptions(this.id, this.userData[1]);
     },
 
     setText: function(text) {
+        console.log(text);
         if (this.textFigure) {
             this.remove(this.textFigure);
         }
@@ -74,6 +86,9 @@ var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
 
 });
 
+// Register custom figure
+draw2d.shape.basic.MyCustomFigureIcon = MyCustomFigureIcon;
+
 var outputLocator = new draw2d.layout.locator.TopLocator;
 var inputLocator = new draw2d.layout.locator.BottomLocator;
 
@@ -83,10 +98,10 @@ var optionSelect = "";
  * Set text on figure options action
  */
 function setTextFigureLoaded(figure) {
-    console.log(figure.userData[0], figure.userData[1], figure.userData[2]);
-    // if (figure.textFigure) {
-    //     figure.remove(figure.textFigure);
-    // }
+    // console.log(figure.id, figure.userData[0], figure.userData[1], figure.userData[2]);
+    // console.log(figure.textFigure.text);
+    figure.remove(figure.textFigure);
+    
     figure.textFigure = new draw2d.shape.basic.Label({
         text: figure.userData[2],
         color: "#000000",
@@ -172,6 +187,7 @@ function setLabel(item) {
  */
 function setTextToFigure(idModal, optionSelect) {
     let figure = app.canvas.getFigure(idModal);
+    console.log(idModal, optionSelect, figure.userData);
     if (figure) {
         if (figure.userData[1] == "segment") {
             if (optionSelect === "Select segment..." || optionSelect === "Segment: Select segment...") {
@@ -188,6 +204,7 @@ function setTextToFigure(idModal, optionSelect) {
             }
         }
     }
+    disableEnableButtonsMenu();
     document.querySelector("div#" + CSS.escape(idModal)).style.display = "none";
 }
 
@@ -215,7 +232,6 @@ function saveOptionSelected(idModal, option) {
  * @param {string} action action type (segment, email, etc.)
  */
 function showOptions(id, action) {
-    disableEnableButtonsMenu();
     dadesUsuari['id-fig'] = id;    
 
     if (action == "end") {
@@ -254,14 +270,14 @@ function showOptions(id, action) {
     
         close.onclick = function() {
             modal.style.setProperty("display", "none");
-            disableEnableButtonsMenu();
+            // disableEnableButtonsMenu();
         }
     
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
           if (event.target == modal) {
             modal.style.display = "none";
-            disableEnableButtonsMenu();
+            // disableEnableButtonsMenu();
           }
         }        
     }
@@ -427,7 +443,7 @@ function optionsSegment(modalContent, idModal) {
             const button = document.createElement('button');
             button.textContent = 'Save';
             button.classList.add('btn-save');
-            button.addEventListener("click", (event) => {
+            button.addEventListener("click", (event) => {                
                 setTextToFigure(idModal, optionSelect);
             });
             div.appendChild(button);
@@ -437,7 +453,6 @@ function optionsSegment(modalContent, idModal) {
     }
 
     modalContent.appendChild(wrapperDiv);
-
 }
 
 /**
