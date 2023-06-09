@@ -162,24 +162,10 @@
                     if (window.localStorage.getItem('draw_saved') != null) {                        
                         this.canvas.clear();
                         let jsonDraw = window.localStorage.getItem('draw_saved');
-                        // console.log(jsonDraw);
                         let reader = new draw2d.io.json.Reader();
                         reader.unmarshal(this.canvas, jsonDraw);
-                        // let jsonDrawArr = JSON.parse(jsonDraw);
                         let figures = this.canvas.getFigures().clone();
                         figures.each((i, f) => {
-                            
-                            // var figSquare = new MyCustomFigureIcon({
-                            //     width: 325,
-                            //     height: 40,
-                            //     bgColor: whiteSherpa,
-                            //     color: greenSherpa,
-                            //     draggable: true,
-                            //     userData: [f.userData[0], f.userData[1], f.userData[2]],
-                            //     radius: 5
-                            // });
-                            // app.figCreatePort(figSquare);
-                            // app.canvas.add(figSquare, f.x, f.y);
                                                         
                             f.setId(f.id);
                             f.onClick = function (emitter, event) {

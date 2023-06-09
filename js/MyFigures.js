@@ -1,4 +1,8 @@
 var dadesUsuari = [];
+var selectedOption = "";
+var outputLocator = new draw2d.layout.locator.TopLocator;
+var inputLocator = new draw2d.layout.locator.BottomLocator;
+var optionSelect = "";
 
 var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
     
@@ -66,7 +70,6 @@ var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
     },
 
     setText: function(text) {
-        console.log(text);
         if (this.textFigure) {
             this.remove(this.textFigure);
         }
@@ -89,17 +92,10 @@ var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
 // Register custom figure
 draw2d.shape.basic.MyCustomFigureIcon = MyCustomFigureIcon;
 
-var outputLocator = new draw2d.layout.locator.TopLocator;
-var inputLocator = new draw2d.layout.locator.BottomLocator;
-
-var optionSelect = "";
-
 /**
  * Set text on figure options action
  */
 function setTextFigureLoaded(figure) {
-    // console.log(figure.id, figure.userData[0], figure.userData[1], figure.userData[2]);
-    // console.log(figure.textFigure.text);
     figure.remove(figure.textFigure);
     
     figure.textFigure = new draw2d.shape.basic.Label({
@@ -115,31 +111,6 @@ function setTextFigureLoaded(figure) {
     // figure.userData.push(text);
     figure.add(figure.textFigure, new draw2d.layout.locator.CenterLocator(this));
 }
-
-/*
-    var MyConnection = draw2d.Connection.extend({
-        init: function(attr, setter, getter) {
-            this._super(attr, setter, getter);
-        
-            // Create a default arrow shape
-            var arrow = new draw2d.shape.basic.Polygon({
-                vertices: [
-                    {x: 0, y: 0},
-                    {x: -10, y: 10},
-                    {x: -10, y: -10}
-                ],
-                stroke: 2,
-                color: "#000000",
-                bgColor: "#ffffff"
-            });
-        
-            // Add the arrow shape to the end of the connection
-            var locator = new draw2d.layout.locator.ManhattanMidpointLocator(this);
-            arrow.setPosition(locator.getX(), locator.getY());
-            this.add(arrow, locator);
-        }
-    });
-*/
 
 function clickRight(x, y, item) {
     var shape = item.shape[0];
@@ -187,7 +158,6 @@ function setLabel(item) {
  */
 function setTextToFigure(idModal, optionSelect) {
     let figure = app.canvas.getFigure(idModal);
-    console.log(idModal, optionSelect, figure.userData);
     if (figure) {
         if (figure.userData[1] == "segment") {
             if (optionSelect === "Select segment..." || optionSelect === "Segment: Select segment...") {
@@ -346,48 +316,6 @@ function clearConfirm(modalEl) {
 }
 
 /**
- * Basic messages modal display and interactions
- * 
- * @param {string} id 
- * @param {string} message 
- 
-function createHtmlModal(id = null, message) {
-    disableEnableButtonsMenu();
-    let workspace = document.getElementById("workspace");    
-    if (document.getElementById(id) == null) {
-        let modalBasic = document.createElement('div');
-        modalBasic.classList.add('modal');
-        modalBasic.id = id;
-        modalBasic.style.setProperty("display", "block");
-        let modalBasicContent = document.createElement('div');
-        modalBasicContent.classList.add('modal-content');
-        modalBasicContent.textContent = message;
-        let closeBasic = document.createElement('span');
-        closeBasic.classList.add('close');
-        closeBasic.innerHTML = '&times';
-    
-        modalBasicContent.appendChild(closeBasic);
-        modalBasic.appendChild(modalBasicContent);
-        workspace.appendChild(modalBasic);
-    
-        closeBasic.onclick = function () {
-            modalBasic.style.setProperty("display", "none");
-            disableEnableButtonsMenu();
-        }
-        return modalBasic;
-    } else {
-        if (message != "There's nothing to save...") {
-            let modalBasic = document.getElementById(id);
-            modalBasic.style.setProperty("display", "block");
-            document.querySelector('.modal-content').textContent = message;
-        }
-        disableEnableButtonsMenu();
-        return document.getElementById(id);
-    }
-}
-*/
-
-/**
  * Create and display options inside the modal according 
  * to the type `segment`
  * 
@@ -514,5 +442,3 @@ function optionsEmail(modalContent, idModal) {
 
     modalContent.appendChild(wrapperDiv);
 }
-
-let selectedOption = "";
