@@ -12,7 +12,7 @@ var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
 
         dadesUsuari['ruta'] = this.userData[0];
         dadesUsuari['figure'] = this.userData[1];
-        dadesUsuari['text-label'] = this.userData[2];
+        dadesUsuari['text-label'] = this.userData[2];        
         
         shape.icon = new draw2d.shape.basic.Image({
             id: this.id,
@@ -22,6 +22,7 @@ var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
         });
 
         shape.icon.on("click", function() {
+            disableEnableButtonsMenu();
             showOptions(shape.icon.id, dadesUsuari['figure']);
         });
         
@@ -52,7 +53,7 @@ var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
         }
 
         this.selectable = false;
-        
+
         return shape;
     },
 
@@ -79,38 +80,43 @@ var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
             fontColor: "#000000",
             stroke: 0,
         });
+        this.typeFigure = dadesUsuari['figure'];
+        this.idFigure = dadesUsuari['id-fig'];
+        var self = this;
         this.textFigure.on("click", function() {
-            showOptions(dadesUsuari['id-fig'], dadesUsuari['figure']);
+            disableEnableButtonsMenu();
+            showOptions(self.idFigure, self.typeFigure);
         });
         this.textFigure.setWidth(20);
         this.userData.push(text);
         this.add(this.textFigure, new draw2d.layout.locator.CenterLocator(this));
     }
-
+    
+    
 });
 
-// Register custom figure
-draw2d.shape.basic.MyCustomFigureIcon = MyCustomFigureIcon;
+// // Register custom figure
+// draw2d.shape.basic.MyCustomFigureIcon = MyCustomFigureIcon;
 
 /**
  * Set text on figure options action
  */
-function setTextFigureLoaded(figure) {
-    figure.remove(figure.textFigure);
+// function setTextFigureLoaded(figure) {
+//     figure.remove(figure.textFigure);
     
-    figure.textFigure = new draw2d.shape.basic.Label({
-        text: figure.userData[2],
-        color: "#000000",
-        fontColor: "#000000",
-        stroke: 0,
-    });
-    figure.textFigure.on("click", function() {
-        showOptions(figure.id, figure.userData[1]);
-    });
-    figure.textFigure.setWidth(20);
-    // figure.userData.push(text);
-    figure.add(figure.textFigure, new draw2d.layout.locator.CenterLocator(this));
-}
+//     figure.textFigure = new draw2d.shape.basic.Label({
+//         text: figure.userData[2],
+//         color: "#000000",
+//         fontColor: "#000000",
+//         stroke: 0,
+//     });
+//     figure.textFigure.on("click", function() {
+//         showOptions(figure.id, figure.userData[1]);
+//     });
+//     figure.textFigure.setWidth(20);
+//     // figure.userData.push(text);
+//     figure.add(figure.textFigure, new draw2d.layout.locator.CenterLocator(this));
+// }
 
 function clickRight(x, y, item) {
     var shape = item.shape[0];
@@ -202,7 +208,7 @@ function saveOptionSelected(idModal, option) {
  * @param {string} action action type (segment, email, etc.)
  */
 function showOptions(id, action) {
-    dadesUsuari['id-fig'] = id;    
+    dadesUsuari['id-fig'] = id;
 
     if (action == "end") {
         return;
@@ -240,14 +246,14 @@ function showOptions(id, action) {
     
         close.onclick = function() {
             modal.style.setProperty("display", "none");
-            // disableEnableButtonsMenu();
+            disableEnableButtonsMenu();
         }
     
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
           if (event.target == modal) {
             modal.style.display = "none";
-            // disableEnableButtonsMenu();
+            disableEnableButtonsMenu();
           }
         }        
     }
