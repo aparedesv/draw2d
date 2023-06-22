@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="#">
+    <title>JS Flow Moundata/Sherpa</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://freegroup.github.io/draw2d/jquery.js"></script>
+    <script src="https://freegroup.github.io/draw2d/jquery-ui.js"></script>
+    <script src="https://freegroup.github.io/draw2d/draw2d.js"></script>
+    <script src="js/MyFigures.js"></script>
+</head>
+<body>
+    <div id="app">
+        <main id="workspace">
+            <div id="my-figures" style="width: 100%; height: 100%; cursor: default;"></div>
+        
+            <div id="save-modal" class="modal hide">
+                <div class="modal-content">
+                    <p></p>
+                    <span class="close">×</span>
+                </div>
+            </div>
+        
+            <div id="clear-modal" class="modal hide">
+                <div class="modal-content">
+                    <p>Are you sure you want to clear the data and lose your campaign?</p>
+                    <span class="close">×</span>
+                    <div class="btns-modal"><button id="btn-no">NO</button><button id="btn-yes">YES</button></div>
+                </div>
+            </div>
+        
+        </main>
+        <aside>
+            <div class="action-wrapper">
+                <h3 class="title">list</h3>
+                <div class="icons-wrapper">
+                    <menu-figure ruta="join_inner_FILL0_wght400_GRAD0_opsz48.svg"
+                        template='<svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M16 38q-5.85 0-9.925-4.075Q2 29.85 2 24q0-5.85 4.075-9.925Q10.15 10 16 10q1.8 0 3.475.425T22.6 11.65q-.65.5-1.2 1.05-.55.55-1.1 1.15-1-.4-2.075-.625Q17.15 13 16 13q-4.55 0-7.775 3.2Q5 19.4 5 24q0 4.55 3.225 7.775Q11.45 35 16 35q1.15 0 2.225-.225 1.075-.225 2.075-.625.55.6 1.1 1.15.55.55 1.2 1.05-1.45.8-3.125 1.225Q17.8 38 16 38Zm16 0q-1.8 0-3.475-.425T25.4 36.35q.65-.5 1.2-1.05.55-.55 1.1-1.15 1 .4 2.075.625Q30.85 35 32 35q4.6 0 7.8-3.225T43 24q0-4.6-3.2-7.8T32 13q-1.15 0-2.225.225-1.075.225-2.075.625-.55-.6-1.1-1.15-.55-.55-1.2-1.05 1.45-.8 3.125-1.225Q30.2 10 32 10q5.85 0 9.925 4.075Q46 18.15 46 24q0 5.85-4.075 9.925Q37.85 38 32 38Zm-8-2.5q-2.85-1.95-4.425-5Q18 27.45 18 24t1.575-6.5q1.575-3.05 4.425-5 2.85 1.95 4.425 5Q30 20.55 30 24t-1.575 6.5q-1.575 3.05-4.425 5Z"/></svg>'
+                        title="Segment" figure="segment"></menu-figure>
+                    <menu-figure ruta="description_FILL0_wght400_GRAD0_opsz48.svg"
+                        template='<svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M15.95 35.5h16.1v-3h-16.1Zm0-8.5h16.1v-3h-16.1ZM11 44q-1.2 0-2.1-.9Q8 42.2 8 41V7q0-1.2.9-2.1Q9.8 4 11 4h18.05L40 14.95V41q0 1.2-.9 2.1-.9.9-2.1.9Zm16.55-27.7V7H11v34h26V16.3ZM11 7v9.3V7v34V7Z"/></svg>'
+                        title="Form" figure="form"></menu-figure>
+                </div>
+            </div>
+            <div class="action-wrapper">
+                <h3 class="title">sending</h3>
+                <div class="icons-wrapper">
+                    <menu-figure ruta="mail_FILL0_wght400_GRAD0_opsz48.svg"
+                        template='<svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M7 40q-1.2 0-2.1-.9Q4 38.2 4 37V11q0-1.2.9-2.1Q5.8 8 7 8h34q1.2 0 2.1.9.9.9.9 2.1v26q0 1.2-.9 2.1-.9.9-2.1.9Zm17-15.1L7 13.75V37h34V13.75Zm0-3L40.8 11H7.25ZM7 13.75V11v26Z"/></svg>'
+                        title="Email" figure="email"></menu-figure>
+                    <menu-figure ruta="send_to_mobile_FILL0_wght400_GRAD0_opsz48.svg"
+                        template='<svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="m34.3 31.6-2.1-2.1 4.1-4.05H24v-3h12.3l-4.1-4.05 2.1-2.1 7.65 7.65ZM13 46q-1.25 0-2.125-.875T10 43V5q0-1.25.875-2.125T13 2h22q1.25 0 2.125.875T38 5v7.3h-3V9.5H13v29h22v-2.8h3V43q0 1.25-.875 2.125T35 46Zm0-4.5V43h22v-1.5Zm0-35h22V5H13Zm0 0V5v1.5Zm0 35V43Z"/></svg>'
+                        title="Notificaction" figure="notificaction"></menu-figure>
+                    <menu-figure ruta="sms_FILL0_wght400_GRAD0_opsz48.svg"
+                        template='<svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M15.3 21.85q.85 0 1.425-.575.575-.575.575-1.425 0-.85-.575-1.425-.575-.575-1.425-.575-.85 0-1.425.575Q13.3 19 13.3 19.85q0 .85.575 1.425.575.575 1.425.575Zm8.85 0q.85 0 1.425-.575.575-.575.575-1.425 0-.85-.575-1.425-.575-.575-1.425-.575-.85 0-1.425.575-.575.575-.575 1.425 0 .85.575 1.425.575.575 1.425.575Zm8.5 0q.85 0 1.425-.575.575-.575.575-1.425 0-.85-.575-1.425-.575-.575-1.425-.575-.85 0-1.425.575-.575.575-.575 1.425 0 .85.575 1.425.575.575 1.425.575ZM4 44V7q0-1.15.9-2.075Q5.8 4 7 4h34q1.15 0 2.075.925Q44 5.85 44 7v26q0 1.15-.925 2.075Q42.15 36 41 36H12Zm3-7.25L10.75 33H41V7H7ZM7 7v29.75Z"/></svg>'
+                        title="SMS" figure="sms"></menu-figure>
+                    <menu-figure ruta="campaign_FILL0_wght400_GRAD0_opsz48.svg"
+                        template='<svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M36.5 25.5v-3H44v3ZM39 40l-6.05-4.5 1.8-2.4 6.05 4.5Zm-4.1-25.15-1.8-2.4L39 8l1.8 2.4ZM10.5 38v-8H7q-1.25 0-2.125-.875T4 27v-6q0-1.25.875-2.125T7 18h9l10-6v24l-10-6h-2.5v8ZM15 24Zm13 6.7V17.3q1.35 1.2 2.175 2.925Q31 21.95 31 24t-.825 3.775Q29.35 29.5 28 30.7ZM7 21v6h9.8l6.2 3.7V17.3L16.8 21Z"/></svg>'
+                        title="Campaign" figure="campaign"></menu-figure>
+                </div>
+            </div>
+            <div class="action-wrapper">
+                <h3 class="title">conditions &amp; workflow</h3>
+                <div class="icons-wrapper">
+                    <menu-figure ruta="schedule_FILL0_wght400_GRAD0_opsz48.svg"
+                        template='<svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="m31.35 33.65 2.25-2.25-7.95-8V13.35h-3V24.6ZM24 44q-4.1 0-7.75-1.575-3.65-1.575-6.375-4.3-2.725-2.725-4.3-6.375Q4 28.1 4 24t1.575-7.75q1.575-3.65 4.3-6.375 2.725-2.725 6.375-4.3Q19.9 4 24 4t7.75 1.575q3.65 1.575 6.375 4.3 2.725 2.725 4.3 6.375Q44 19.9 44 24t-1.575 7.75q-1.575 3.65-4.3 6.375-2.725 2.725-6.375 4.3Q28.1 44 24 44Zm0-20Zm0 17q7 0 12-5t5-12q0-7-5-12T24 7q-7 0-12 5T7 24q0 7 5 12t12 5Z"/></svg>'
+                        title="Wait" figure="wait"></menu-figure>
+                    <menu-figure ruta="rule_folder_FILL0_wght400_GRAD0_opsz48.svg"
+                        template='<svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="m15.65 31.3 9.2-9.2-2.15-2.15-7.1 7.1-2.85-2.85-2.1 2.1Zm13.15 0 3.2-3.2 3.2 3.2 2.1-2.1-3.2-3.2 3.2-3.2-2.1-2.1-3.2 3.2-3.2-3.2-2.1 2.1 3.2 3.2-3.2 3.2ZM7.05 40q-1.2 0-2.1-.925-.9-.925-.9-2.075V11q0-1.15.9-2.075Q5.85 8 7.05 8h14l3 3h17q1.15 0 2.075.925.925.925.925 2.075v23q0 1.15-.925 2.075Q42.2 40 41.05 40Zm0-29v26h34V14H22.8l-3-3H7.05Zm0 0v26Z"/></svg>'
+                        title="If-Else" figure="ifelse"></menu-figure>
+                    <menu-figure ruta="stop_circle_FILL0_wght400_GRAD0_opsz48.svg"
+                        template='<svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M16.5 31.5h15v-15h-15ZM24 44q-4.1 0-7.75-1.575-3.65-1.575-6.375-4.3-2.725-2.725-4.3-6.375Q4 28.1 4 23.95q0-4.1 1.575-7.75 1.575-3.65 4.3-6.35 2.725-2.7 6.375-4.275Q19.9 4 24.05 4q4.1 0 7.75 1.575 3.65 1.575 6.35 4.275 2.7 2.7 4.275 6.35Q44 19.85 44 24q0 4.1-1.575 7.75-1.575 3.65-4.275 6.375t-6.35 4.3Q28.15 44 24 44Zm.05-3q7.05 0 12-4.975T41 23.95q0-7.05-4.95-12T24 7q-7.05 0-12.025 4.95Q7 16.9 7 24q0 7.05 4.975 12.025Q16.95 41 24.05 41ZM24 24Z"/></svg>'
+                        title="End" figure="end"></menu-figure>
+                </div>
+            </div>
+            <div class="action-wrapper">
+                <h3 class="title">contact</h3>
+                <div class="icons-wrapper">
+                    <menu-figure ruta="account_box_FILL0_wght400_GRAD0_opsz48.svg"
+                        template='<svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M9 37.15q3-2.8 6.8-4.525Q19.6 30.9 24 30.9q4.4 0 8.2 1.725Q36 34.35 39 37.15V9H9Zm15.1-10.2q2.9 0 4.9-2 2-2 2-4.9 0-2.9-2-4.9-2-2-4.9-2-2.9 0-4.9 2-2 2-2 4.9 0 2.9 2 4.9 2 2 4.9 2ZM9 42q-1.2 0-2.1-.9Q6 40.2 6 39V9q0-1.2.9-2.1Q7.8 6 9 6h30q1.2 0 2.1.9.9.9.9 2.1v30q0 1.2-.9 2.1-.9.9-2.1.9Zm2.75-3h24.5v-.45q-2.7-2.3-5.8-3.475Q27.35 33.9 24 33.9t-6.45 1.175q-3.1 1.175-5.8 3.475V39ZM24.1 23.95q-1.6 0-2.75-1.15t-1.15-2.75q0-1.65 1.15-2.775t2.75-1.125q1.65 0 2.775 1.125T28 20.05q0 1.6-1.125 2.75T24.1 23.95Zm-.1-.9Z"/></svg>'
+                        title="Person" figure="person"></menu-figure>
+                    <menu-figure ruta="store_FILL0_wght400_GRAD0_opsz48.svg"
+                        template='<svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M8 11V8h32.1v3Zm.25 29V27.1H5.8v-3L8 14h32.05l2.2 10.1v3H39.8V40h-3V27.1h-9.45V40Zm3-3h13.1v-9.9h-13.1Zm-2.5-12.9H39.3Zm0 0H39.3L37.75 17H10.3Z"/></svg>'
+                        title="Organitzation" figure="organitzation"></menu-figure>
+                    <menu-figure ruta="corporate_fare_FILL0_wght400_GRAD0_opsz48.svg"
+                        template='<svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M4 42V6h19.5v8.25H44V42Zm3-3h13.5v-5.25H7Zm0-8.25h13.5V25.5H7Zm0-8.25h13.5v-5.25H7Zm0-8.25h13.5V9H7ZM23.5 39H41V17.25H23.5Zm4-13.5v-3h8.25v3Zm0 8.25v-3h8.25v3Z"/></svg>'
+                        title="Corporate" figure="corporate"></menu-figure>
+                </div>
+            </div>
+            <div class="action-wrapper">
+                <h3 class="title">benefits</h3>
+                <div class="icons-wrapper">
+                    <menu-figure src="qr_code_scanner_FILL0_wght400_GRAD0_opsz48.svg"
+                        template='<svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M4 12.65V4h8.65v3H7v5.65ZM4 44v-8.65h3V41h5.65v3Zm31.35 0v-3H41v-5.65h3V44ZM41 12.65V7h-5.65V4H44v8.65Zm-5.6 22.8h3.15v3.15H35.4Zm0-6.3h3.15v3.15H35.4Zm-3.15 3.15h3.15v3.15h-3.15Zm-3.15 3.15h3.15v3.15H29.1Zm-3.15-3.15h3.15v3.15h-3.15Zm6.3-6.3h3.15v3.15h-3.15Zm-3.15 3.15h3.15v3.15H29.1ZM25.95 26h3.15v3.15h-3.15Zm12.6-16.6V22h-12.6V9.4ZM22 26v12.6H9.4V26Zm0-16.6V22H9.4V9.4Zm-2.5 26.7v-7.6h-7.6v7.6Zm0-16.6v-7.6h-7.6v7.6Zm16.55 0v-7.6h-7.6v7.6Z"/></svg>'
+                        title="Coupon" figure="coupon"></menu-figure>
+                </div>
+            </div>
+        
+            <div class="action-wrapper buttons"><button id="save" @click="save">SAVE</button><button id="load"
+                    @click="load">LOAD</button><button id="clear" @click="clearCanvas">CLEAR</button></div>
+        </aside>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="js/vue-draw.js"></script>
+</body>
+</html>

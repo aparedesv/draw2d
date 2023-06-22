@@ -1,0 +1,193 @@
+:root {
+    --color-verd-sherpa: #5dbecb;
+    --color-verd-sherpa-btn: #92d050;
+    --color-blanc-sherpa: #fff;
+    --color-blau-sherpa: #d5e5f4;
+    --color-negre-sherpa: #000;
+}
+
+body {
+    margin: 0 auto;
+    font-family: 'Courier New', monospace;
+}
+
+#app {
+    display: grid;
+    grid-template-columns: 1fr 350px;    
+}
+
+#workspace {
+    position: relative;
+}
+
+aside {
+    height: calc(100vh - 60px);
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 30px;
+    border-left: 3px solid var(--color-verd-sherpa);
+}
+
+main {
+    min-height: 100vh;
+}
+
+#my-figures > svg {
+    height: 100% !important;
+}
+
+.prova {
+    margin: 0;
+}
+
+.title {
+    text-align: center;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    font-weight: lighter;
+}
+
+.icons-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+}
+
+.icon-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.icon-title {
+    margin: 0;
+    text-align: center;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    font-weight: lighter;
+}
+
+.buttons {
+    margin-top: auto;
+}
+
+.btns-modal {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-around;
+}
+
+aside button, .btns-modal button {
+    width: 90px;
+    height: 40px;
+    letter-spacing: 2px;
+    text-decoration: none;
+    text-transform: uppercase;
+    text-align: center;
+    border-radius: 0;
+    border: 3px solid var(--color-blanc-sherpa);
+    background-color: var(--color-verd-sherpa);
+    font-weight: bolder;
+    cursor: pointer;
+}
+
+.border-2 {
+    border: 2px solid #000;
+}
+
+/* MODAL > */
+
+.hide {
+    display: none;
+}
+
+.modal {
+    position: absolute; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    overflow: auto; /* Enable scroll if needed */
+    width: 100%;
+    height: 100%;
+    background-color: #5dbecb78;
+}
+
+.modal-content {
+    display: grid;
+    position: relative;
+    background-color: var(--color-blanc-sherpa);
+    margin: 10% auto 0;
+    padding: 15px 30px 15px 15px;
+    border: 1px solid var(--color-verd-sherpa);
+    border-radius: 30px;
+    max-width: 450px;
+}
+
+.content-wrapper {
+    min-height: 300px;
+}
+
+.modal-content p {
+    margin-top: 0;
+}
+
+.close {
+    color: var(--color-verd-sherpa);
+    font-size: 28px;
+    position: absolute;
+    right: 10px;
+    top: 5px;
+}
+
+.close:hover,
+.close:focus {
+    color: var(--color-negre-sherpa);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.content-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 1rem;
+}
+
+.content-wrapper select {
+    background-color: transparent;
+    font-family: inherit;
+    width: 100%;
+}
+
+.content-wrapper select option{
+    padding-top: 3px;
+}
+
+.content-wrapper button {
+    width: 100%;
+    font-family: inherit;
+    text-align: center;
+    border-radius: 5px;
+    border: 3px solid var(--color-verd-sherpa);
+    padding: 8px 0;
+    cursor: pointer;
+}
+
+.content-wrapper .btn-action {
+    background-color: var(--color-blau-sherpa);
+}
+
+.content-wrapper .btn-save {
+    background-color: var(--color-verd-sherpa-btn);
+}
+
+.content-wrapper > :nth-last-child(2),
+.content-wrapper > :nth-last-child(1) {
+    align-self: end;
+}
+
+/* MODAL < */
