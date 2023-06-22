@@ -106,6 +106,7 @@ var app = new Vue({
                         stroke: 0,
                     });
                     f.textFigure.on("click", function () {
+                        disableEnableButtonsMenu();
                         showOptions(f.id, f.userData[1]);
                     });
                     f.add(f.textFigure, new draw2d.layout.locator.CenterLocator(f));

@@ -87,36 +87,11 @@ var MyCustomFigureIcon = draw2d.shape.basic.Rectangle.extend({
             disableEnableButtonsMenu();
             showOptions(self.idFigure, self.typeFigure);
         });
-        this.textFigure.setWidth(20);
         this.userData.push(text);
+        this.textFigure.setWidth(20);
         this.add(this.textFigure, new draw2d.layout.locator.CenterLocator(this));
     }
-
-
 });
-
-// // Register custom figure
-// draw2d.shape.basic.MyCustomFigureIcon = MyCustomFigureIcon;
-
-/**
- * Set text on figure options action
- */
-// function setTextFigureLoaded(figure) {
-//     figure.remove(figure.textFigure);
-
-//     figure.textFigure = new draw2d.shape.basic.Label({
-//         text: figure.userData[2],
-//         color: "#000000",
-//         fontColor: "#000000",
-//         stroke: 0,
-//     });
-//     figure.textFigure.on("click", function() {
-//         showOptions(figure.id, figure.userData[1]);
-//     });
-//     figure.textFigure.setWidth(20);
-//     // figure.userData.push(text);
-//     figure.add(figure.textFigure, new draw2d.layout.locator.CenterLocator(this));
-// }
 
 function clickRight(x, y, item) {
     var shape = item.shape[0];
@@ -164,19 +139,28 @@ function setLabel(item) {
  */
 function setTextToFigure(idModal, optionSelect) {
     let figure = app.canvas.getFigure(idModal);
+    // console.log(optionSelect.length, figure.width);
+    if (optionSelect.length > 45) {
+        figure.width = figure.width + optionSelect.length;
+    }
     if (figure) {
+        // canviar if per switch
         if (figure.userData[1] == "segment") {
             if (optionSelect === "Select segment..." || optionSelect === "Segment: Select segment...") {
                 figure.setText("");
+                figure.userData[2] = "";
             } else {
                 figure.setText(optionSelect);
+                figure.userData[2] = optionSelect;
             }
         }
         if (figure.userData[1] == "email") {
             if (optionSelect === "Select email..." || optionSelect === "Email: Select email...") {
                 figure.setText("");
+                figure.userData[2] = "";
             } else {
                 figure.setText(optionSelect);
+                figure.userData[2] = optionSelect;
             }
         }
     }
