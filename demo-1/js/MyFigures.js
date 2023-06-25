@@ -216,17 +216,23 @@ function showOptions(id, action) {
         modal.appendChild(modalContent);
         workspace.appendChild(modal);
 
-        switch (action) {
-            case "segment":
-                optionsSegment(modalContent, id);
-                break;
-            case "email":
-                optionsEmail(modalContent, id);
-                break;
+        var figureFinded = dataFigures.find(group =>
+            group.figures.find(figure => figure.name === action.charAt(0).toUpperCase() + action.slice(1))
+        );
 
-            default:
-                break;
-        }
+        modalContentBuild(modalContent, id, figureFinded);
+
+        // switch (action) {
+        //     case "segment":
+        //         optionsSegment(modalContent, id);
+        //         break;
+        //     case "email":
+        //         optionsEmail(modalContent, id);
+        //         break;
+
+        //     default:
+        //         break;
+        // }
 
         close.onclick = function () {
             modal.style.setProperty("display", "none");
@@ -306,72 +312,114 @@ function clearConfirm(modalEl) {
 }
 
 /**
+ * Create and display HTML inside the modal according 
+ * to the figure data
+ * 
+ * @param {object} modalContent HTML element
+ * @param {string} idModal Modal id
+ * @param {object} figureData JSON data
+ */
+function modalContentBuild(modalContent, idModal, figureData) {
+    // console.log(figureData.figures[0].modalElements);
+    const wrapperDiv = document.createElement('div');
+    wrapperDiv.classList.add('content-wrapper');
+
+    figureData.figures[0].modalElements.forEach(element => {
+        let el = document.createElement(element.type);
+        if (element.class != "") {            
+            el.classList.add(element.class); 
+        }
+        if (element.text != "") {            
+            el.textContent = element.text;
+        }
+        if (element.type == "select") {
+            element.options.forEach(option => {
+                let opt = document.createElement('option');
+                opt.textContent = option.text;
+                console.log(opt);
+                el.appendChild(opt);
+            });
+            el.addEventListener("change", (event) => {
+                saveOptionSelected(idModal, event.target.value);
+            });
+        }
+        if (element.class == "btn-save") {            
+            el.addEventListener("click", (event) => {
+                setTextToFigure(idModal, optionSelect);
+            });
+        }
+        wrapperDiv.appendChild(el);
+    });
+    modalContent.appendChild(wrapperDiv);
+}
+
+/**
  * Create and display options inside the modal according 
  * to the type `segment`
  * 
  * @param {object} modalContent HTML element
  * @param {string} idModal Modal id
  */
-function optionsSegment(modalContent, idModal) {
-    const wrapperDiv = document.createElement('div');
-    wrapperDiv.classList.add('content-wrapper');
+// function optionsSegment(modalContent, idModal) {
+//     const wrapperDiv = document.createElement('div');
+//     wrapperDiv.classList.add('content-wrapper');
 
-    for (let i = 1; i <= 6; i++) {
-        const div = document.createElement('div');
-        div.classList.add(`div${i}`);
+//     for (let i = 1; i <= 6; i++) {
+//         const div = document.createElement('div');
+//         div.classList.add(`div${i}`);
 
-        if (i === 1) {
-            div.textContent = 'Select Segment List:';
-        }
+//         if (i === 1) {
+//             div.textContent = 'Select Segment List:';
+//         }
 
-        if (i === 2) {
-            const select = document.createElement('select');
-            select.classList.add('border-2');
-            const option1 = document.createElement('option');
-            const option2 = document.createElement('option');
-            const option3 = document.createElement('option');
-            option1.textContent = 'Select segment...';
-            option2.textContent = 'People that birthday = date(today)';
-            option3.textContent = 'People thats last buy is > date(two months ago)';
-            select.addEventListener("change", (event) => {
-                saveOptionSelected(idModal, event.target.value);
-            });
-            select.appendChild(option1);
-            select.appendChild(option2);
-            select.appendChild(option3);
-            div.appendChild(select);
-        }
+//         if (i === 2) {
+//             const select = document.createElement('select');
+//             select.classList.add('border-2');
+//             const option1 = document.createElement('option');
+//             const option2 = document.createElement('option');
+//             const option3 = document.createElement('option');
+//             option1.textContent = 'Select segment...';
+//             option2.textContent = 'People that birthday = date(today)';
+//             option3.textContent = 'People thats last buy is > date(two months ago)';
+//             select.addEventListener("change", (event) => {
+//                 saveOptionSelected(idModal, event.target.value);
+//             });
+//             select.appendChild(option1);
+//             select.appendChild(option2);
+//             select.appendChild(option3);
+//             div.appendChild(select);
+//         }
 
-        if (i === 3) {
-            div.textContent = 'Run List:';
-        }
+//         if (i === 3) {
+//             div.textContent = 'Run List:';
+//         }
 
-        if (i === 4) {
-            div.classList.add('border-2');
-        }
+//         if (i === 4) {
+//             div.classList.add('border-2');
+//         }
 
-        if (i === 5) {
-            const button = document.createElement('button');
-            button.textContent = 'New Segment';
-            button.classList.add('btn-action');
-            div.appendChild(button);
-        }
+//         if (i === 5) {
+//             const button = document.createElement('button');
+//             button.textContent = 'New Segment';
+//             button.classList.add('btn-action');
+//             div.appendChild(button);
+//         }
 
-        if (i === 6) {
-            const button = document.createElement('button');
-            button.textContent = 'Save';
-            button.classList.add('btn-save');
-            button.addEventListener("click", (event) => {
-                setTextToFigure(idModal, optionSelect);
-            });
-            div.appendChild(button);
-        }
+//         if (i === 6) {
+//             const button = document.createElement('button');
+//             button.textContent = 'Save';
+//             button.classList.add('btn-save');
+//             button.addEventListener("click", (event) => {
+//                 setTextToFigure(idModal, optionSelect);
+//             });
+//             div.appendChild(button);
+//         }
 
-        wrapperDiv.appendChild(div);
-    }
+//         wrapperDiv.appendChild(div);
+//     }
 
-    modalContent.appendChild(wrapperDiv);
-}
+//     modalContent.appendChild(wrapperDiv);
+// }
 
 /**
  * Create and display options inside the modal according 
@@ -380,55 +428,55 @@ function optionsSegment(modalContent, idModal) {
  * @param {object} modalContent HTML element
  * @param {string} idModal Modal id
  */
-function optionsEmail(modalContent, idModal) {
-    const wrapperDiv = document.createElement('div');
-    wrapperDiv.classList.add('content-wrapper');
+// function optionsEmail(modalContent, idModal) {
+//     const wrapperDiv = document.createElement('div');
+//     wrapperDiv.classList.add('content-wrapper');
 
-    for (let i = 1; i <= 4; i++) {
-        const div = document.createElement('div');
-        div.classList.add(`div${i}`);
+//     for (let i = 1; i <= 4; i++) {
+//         const div = document.createElement('div');
+//         div.classList.add(`div${i}`);
 
-        if (i === 1) {
-            div.textContent = 'Select Email:';
-        }
+//         if (i === 1) {
+//             div.textContent = 'Select Email:';
+//         }
 
-        if (i === 2) {
-            const select = document.createElement('select');
-            select.classList.add('border-2');
-            const option1 = document.createElement('option');
-            const option2 = document.createElement('option');
-            const option3 = document.createElement('option');
-            option1.textContent = 'Select email...';
-            option2.textContent = 'Email A';
-            option3.textContent = 'Email List N';
-            select.addEventListener("change", (event) => {
-                saveOptionSelected(idModal, event.target.value);
-            });
-            select.appendChild(option1);
-            select.appendChild(option2);
-            select.appendChild(option3);
-            div.appendChild(select);
-        }
+//         if (i === 2) {
+//             const select = document.createElement('select');
+//             select.classList.add('border-2');
+//             const option1 = document.createElement('option');
+//             const option2 = document.createElement('option');
+//             const option3 = document.createElement('option');
+//             option1.textContent = 'Select email...';
+//             option2.textContent = 'Email A';
+//             option3.textContent = 'Email List N';
+//             select.addEventListener("change", (event) => {
+//                 saveOptionSelected(idModal, event.target.value);
+//             });
+//             select.appendChild(option1);
+//             select.appendChild(option2);
+//             select.appendChild(option3);
+//             div.appendChild(select);
+//         }
 
-        if (i === 3) {
-            const button = document.createElement('button');
-            button.textContent = 'New Email';
-            button.classList.add('btn-action');
-            div.appendChild(button);
-        }
+//         if (i === 3) {
+//             const button = document.createElement('button');
+//             button.textContent = 'New Email';
+//             button.classList.add('btn-action');
+//             div.appendChild(button);
+//         }
 
-        if (i === 4) {
-            const button = document.createElement('button');
-            button.textContent = 'Save';
-            button.classList.add('btn-save');
-            button.addEventListener("click", (event) => {
-                setTextToFigure(idModal, optionSelect);
-            });
-            div.appendChild(button);
-        }
+//         if (i === 4) {
+//             const button = document.createElement('button');
+//             button.textContent = 'Save';
+//             button.classList.add('btn-save');
+//             button.addEventListener("click", (event) => {
+//                 setTextToFigure(idModal, optionSelect);
+//             });
+//             div.appendChild(button);
+//         }
 
-        wrapperDiv.appendChild(div);
-    }
+//         wrapperDiv.appendChild(div);
+//     }
 
-    modalContent.appendChild(wrapperDiv);
-}
+//     modalContent.appendChild(wrapperDiv);
+// }
