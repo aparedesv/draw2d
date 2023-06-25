@@ -139,7 +139,6 @@ function setLabel(item) {
  */
 function setTextToFigure(idModal, optionSelect) {
     let figure = app.canvas.getFigure(idModal);
-    // console.log(optionSelect.length, figure.width);
     if (optionSelect.length > 45) {
         figure.width = figure.width + optionSelect.length;
     }
@@ -220,19 +219,7 @@ function showOptions(id, action) {
             group.figures.find(figure => figure.name === action.charAt(0).toUpperCase() + action.slice(1))
         );
 
-        modalContentBuild(modalContent, id, figureFinded);
-
-        // switch (action) {
-        //     case "segment":
-        //         optionsSegment(modalContent, id);
-        //         break;
-        //     case "email":
-        //         optionsEmail(modalContent, id);
-        //         break;
-
-        //     default:
-        //         break;
-        // }
+        modalContentBuild(modalContent, id, figureFinded);        
 
         close.onclick = function () {
             modal.style.setProperty("display", "none");
@@ -336,7 +323,6 @@ function modalContentBuild(modalContent, idModal, figureData) {
             element.options.forEach(option => {
                 let opt = document.createElement('option');
                 opt.textContent = option.text;
-                console.log(opt);
                 el.appendChild(opt);
             });
             el.addEventListener("change", (event) => {

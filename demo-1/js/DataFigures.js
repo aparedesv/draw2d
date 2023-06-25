@@ -14,7 +14,7 @@ var dataFigures = [
                     },
                     {
                         "type": "select",
-                        "text": "Select Segment List:",
+                        "text": "",
                         "class": "border-2",
                         "options": [
                             {"text": "Select segment..."},
@@ -28,9 +28,13 @@ var dataFigures = [
                         "class": "",
                     },
                     {
-                        "type": "div",
+                        "type": "select",
                         "text": "",
                         "class": "border-2",
+                        "options": [
+                            { "text": "Once" },
+                            { "text": "Multiple" },
+                        ]
                     },
                     {
                         "type": "button",

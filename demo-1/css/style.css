@@ -128,8 +128,8 @@ aside button, .btns-modal button {
     max-width: 450px;
 }
 
-.content-wrapper {
-    min-height: 300px;
+.content-wrapper > * {
+    min-height: 2em;
 }
 
 .modal-content p {
